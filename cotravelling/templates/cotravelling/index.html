@@ -1,70 +1,74 @@
-{# Load the tag library #}
-{% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
-
-<!-- A grey horizontal navbar that becomes vertical on small screens -->
-<nav class="navbar navbar-expand-sm bg-light">
-
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="/">Доступные поездки</a>
-    </li>
-    {% if auth %}
-    <li class="nav-item">
-      <a class="nav-link" href="/logout">Выйти</a>
-    </li>
-    {% else %}
-    <li class="nav-item">
-      <a class="nav-link" href="/login/vk-oauth2">Войти</a>
-    </li>
-    {% endif %}
-  </ul>
-
-</nav>
-
-
+{% include "cotravelling/base.html" %}
 
 {% if auth %}
-<h1> {{ auth }} </h1>
-{% endif %}
 
 
-
-{% if auth %}
-<form action="/" method="post">
+    <center><h1> Добавить поездку </h1></center>
+<form action="{{ request.get_full_path }}" method="post">
+    
+    <div class="w-100 p-3" style="background-color: orange;">
+    <div class="container">
+    <div class="row justify-content-center">
     {% csrf_token %}
-    <div class="input-group mb-3">
-    <input type="text" name="target" placeholder="target" class="form-control"/>
-    <input type="datetime-local" name="date" class="form-control"/>
-    <input type="number" name="free_places" placeholder="number of people" class="form-control"/>
-    <button type="submit" class="btn btn-primary">Add a trip</button>
+        <div class="col-sm-3">
+        <input type="text" name="target" placeholder="Куда?" class="form-control"/>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="datetime" placeholder="Когда?"/>
+                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+        <input type="number" min="1" name="free_places" placeholder="Сколько свободных мест?" class="form-control"/>
+        </div>
+        <div class="col-sm-3">
+        <button type="submit" class="btn btn-primary">Добавить поездку</button>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'ru'
+                });
+            });
+        </script>
+    </div>
+    </div>
+    
     </div>
 </form>
 {% endif %}
 
+<div class="w-100 p-3">
 <div class="row">
-  <div class="col-sm-4">{% if trips %}
-    <table class="table" title="title">
+  {% for trip_column in trips %}
+  
+  <div class="col" style="width:33%">{% if trip_column %}
+    <table class="table" style="background-color:#DDF0FF">
+    {% if forloop.counter0 == 0 %}
+    <a href="/?from={{link_prev_date}}">Прошлые три дня</a>
+    {% elif forloop.counter0 == 1 %}
+    <a>&nbsp;</a>
+    {% elif forloop.counter0 == 2 %}
+    <a href="/?from={{link_next_date}}">Следующие три дня</a>
+    {% endif %}
     <thead>
     <tr>
-      <th scope="col">вс. 21.04</th>
-      <th scope="col">Участники</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col-xs-3">{{trip_column.date}}</th>
+      <th scope="col-xs-3">Участники</th>
+      <th scope="col-xs-3"></th>
     </tr>
     </thead>
-    {% for trip in trips %}
+    {% for trip in trip_column.trips %}
         <tr>
             <td>
             <div>{{trip.trip_info.target}}</div>
-            <small>{{trip.trip_info.free_places}}
+            <div><small>{{trip.trip_info.time}}</small></div>
+            <div><small>{{trip.trip_info.free_places}}
             {% if trip.trip_info.free_places == 1 %}
             место
             {% elif trip.trip_info.free_places <= 4 and trip.trip_info.free_places >= 2%}
@@ -72,14 +76,18 @@
             {% else %}
             мест
             {% endif %}
-            </small>
+            </small></div>
             </td>
-            <td>{% for user in trip.users %}
-                {{ user }},
-            {% endfor %}</td>
+            <td>
+<!--            <ul class="list-group">-->
+            {% for user in trip.users %}
+                <small>{{ user }}</small><br/>
+            {% endfor %}
+<!--            </ul>-->
+            </td>
             <td>
             {% if auth %}
-                <form action="/" method="post">
+                <form action="{{ request.get_full_path }}" method="post">
                     {% csrf_token %}
                     {% if trip.joining %}
                     <div class="input-group mb-3">
@@ -92,6 +100,11 @@
                     {% endif %}
                 </form>
             {% endif %}
+            {% if trip.joining %}
+                <form action="/chat/{{trip.trip_info.id}}" method="get">
+                <button type="submit" class="btn btn-primary">Открыть чат</button>
+                </form>
+            {% endif %}
             </td>
         </tr>
     {% endfor %}
@@ -100,7 +113,8 @@
 {% else %}
     <p>No trips are available.</p>
 {% endif %}</div>
-  <div class="col-sm-4">.col-sm-4</div>
-  <div class="col-sm-4">.col-sm-4</div>
+{% endfor %}
 </div>
+</div>
+
 

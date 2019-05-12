@@ -1,0 +1,69 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<div><img src="/static/cotravelling/image.png" class="img-fluid" alt="People shopping" style="margin-bottom:-15vw; "></img></div>
+<center style="color:white;"><h1>Сервис совместных поездок на физтехе</h1></center>
+<center><form action="/" method="get">
+<button type="submit" style="width: 10em;
+height: 4em;
+border-bottom: none;
+border-top: none;
+border-left: none;
+border-right: none;
+background: #EEAA7B;
+border-radius: 30px;">Найти поездку</button>
+</form></center>
+
+<div style="height:15vw"></div>
+
+<div class="container">
+    <div class="row justify-content-start">
+        <h1>Что мы предлагаем</h1>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-sm-3" align="left">
+            <img src="/static/cotravelling/phystech1.png" style="width:15vw;visibility: hidden;"></img>
+        </div>
+        <div class="col" align="justify">
+            <h4><br/>Быстро. Удобно. В компании физтехов.</h4></br>
+            Мы предлагаем физтехам объединяться, чтобы совершать поездки с повышенным комфортом и экономить время и деньги.
+        </div>
+        <div class="col-sm-3" align="right">
+            <img src="/static/cotravelling/phystech1.png" style="width:15vw"></img>
+        </div>
+        
+    </div>
+    
+    <div class="row justify-content-start">
+        <div class="col-sm-3" align="left">
+            <img src="/static/cotravelling/plus.svg" style="margin-top:1vw;width:13vw"></img>
+        </div>
+        <div class="col" align="justify">
+            
+            <h4><br/><br/>Создайте поездку</h4>
+            Выберите нужный магазин, укажите удобное время поездки и количество свободных мест
+            
+        </div>
+        <div class="col-sm-3" align="right">
+            <img src="/static/cotravelling/plus.svg" style="margin-top:1vw;width:13vw;visibility: hidden;"></img>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-sm-3" align="left">
+            <img src="/static/cotravelling/location.png" style="width:15vw;visibility: hidden;"></img>
+        </div>
+        <div class="col" align="justify">
+            <h4><br/>Найдите попутчиков и договоритесь о встрече</h4>
+            Выберите удобный вам вариант поездки, посмотрите, кто уже присоединился и договоритесь о месте встречи в чате поездки.
+        </div>
+        <div class="col-sm-3" align="right">
+            <img src="/static/cotravelling/location.png" style="width:15vw"></img>
+        </div>
+    </div>
+</div>
