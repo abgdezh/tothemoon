@@ -2,5 +2,4 @@ Django
 dj-database-url
 dj-static
 gunicorn
-postgresql
 psycopg2
