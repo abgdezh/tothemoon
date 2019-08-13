@@ -5,12 +5,14 @@ from django.contrib.auth.models import User
 from django.utils import timezone
         
 class Trip(models.Model):
-    target = models.CharField(max_length=200)
+    source = models.CharField(max_length=30, default="")
+    target = models.CharField(max_length=30, default="")
+    vehicle = models.CharField(max_length=30, default="")
     datetime = models.DateTimeField(default=timezone.now)
     free_places = models.IntegerField(default=0)
     
     def __str__(self):
-        return self.target + " " + str(self.datetime) + " " + str(self.free_places)
+        return self.source + " " + self.target + " " + self.vehicle + " " + str(self.datetime) + " " + str(self.free_places)
     
     def time(self):
         return timezone.localtime(self.datetime).time()

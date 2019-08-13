@@ -7,47 +7,69 @@
 {% else %}
 
 <div class="w-100 p-3">
-<div class="row">
-    <div class="col", style="width:70%">
-        <div class="container">
-            {% for message in messages %}
-            {% if message.author == request.user %}
-            <div class="row justify-content-end">
-            {% else %}
-            <div class="row justify-content-start">
-            {% endif %}
-                <div class="col-xs-4" style="margin-top: 1em">
-                    {% if message.author != request.user %}
-                    {{message.author_info}}:
-                    {% endif %}
-                    <div class="alert alert-primary" role="alert" style="margin-bottom: 0">
-                        {{message.text}}
-                    </div>
-                    <small>{{message.datetime}}</small>
-                </div>
-            </div>
-            {% endfor %}
-            <div style="height:5em;"></div>
+  <div class="row">
+<!--    <table class="table" style="background-color:#DDF0FF">-->
+<!--        <tr>-->
+<!--        <td>Когда:</td><td> {{trip_info.datetime}}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--        <td>Откуда:</td><td> {{trip_info.source}}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--        <td>Куда:</td><td> {{trip_info.target}}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--        <td>На чём:</td><td>-->
+<!--        {% if trip_info.vehicle == "taxi" %} Такси-->
+<!--        {% elif trip_info.vehicle == "carsharing" %} Каршеринг-->
+<!--        {% elif trip_info.vehicle == "owncar" %} Своя машина-->
+<!--        {% endif %}-->
+<!--        </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--        <td>Кто: </td><td>-->
+<!--        {% for user in participants %}-->
+<!--        {{user.first_name}} {{user.last_name}}</br>-->
+<!--        {% endfor %}-->
+<!--        </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+    <div class="container">
+        <div>
+           {{trip_info.source}} → {{trip_info.target}},
         </div>
+        <div>
+        {{trip_info.datetime}}
+        {% if trip_info.is_over %}
+        ({{trip_info.remaining_time}})
+        {% endif %}
+        </div>
+        <div>
+        Поедут: {% for usertrip in participants %}{% if forloop.counter0 != 0 %}, {% endif %}
+        {%if usertrip.is_owner %}<strong>{% endif %}
+        {{usertrip.user.first_name}} {{usertrip.user.last_name}}{%if usertrip.is_owner %}</strong> (создатель поездки){% endif %}{% endfor %}
+        
+        </div>
+        {% for message in messages %}
+        {% if message.author == request.user %}
+        <div class="row justify-content-end">
+        {% else %}
+        <div class="row justify-content-start">
+        {% endif %}
+            <div class="col-xs-4" style="margin-top: 1em">
+                {% if message.author != request.user %}
+                {{message.author_info}}:
+                {% endif %}
+                <div class="alert alert-primary" role="alert" style="margin-bottom: 0;{% if request.user_agent.is_mobile %} font-size:30px {% endif %}">
+                    {{message.text}}
+                </div>
+                <small>{{message.datetime}}</small>
+            </div>
+        </div>
+        {% endfor %}
+        <div style="height:5em;"></div>
     </div>
-    <div class="col"">
-        <table class="table" style="background-color:#DDF0FF">
-            <tr>
-            <td>Когда</td><td> {{trip_info.datetime}}</td>
-            </tr>
-            <tr>
-            <td>Куда:</td><td> {{trip_info.target}}</td>
-            </tr>
-            <tr>
-            <td>Кто: </td><td>
-            {% for user in participants %}
-            {{user.first_name}} {{user.last_name}}</br>
-            {% endfor %}
-            </td>
-            </tr>
-        </table>
-    </div>
-</div>
+  </div>
 </div>
 
 <div class="fixed-bottom" style="background-color: #eee;height:5em;">
@@ -56,11 +78,11 @@
         <div class="w-100 p-3">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col">
-                        <input type="text" name="text" placeholder="Напишите сообщение" class="md-textarea form-control" maxlength=200></textarea>
-                    </div>
-                    <div class="col">
+                    <div class="input-group">
+                        <input type="text" name="text" placeholder="Напишите сообщение" class="form-control" maxlength=200></textarea>
+                        <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Отправить</button>
+                        </div>
                     </div>
                 </div>
             </div>

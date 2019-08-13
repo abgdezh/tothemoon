@@ -25,7 +25,8 @@ SECRET_KEY = 'bb2l*kj582nxwjl3cg)12(ide)slbi_(rui_=@wz_4o-ven0(k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['84.201.167.9', 'shareandsave.ru']
+
 
 
 # Application definition
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'tothemoon.urls'
@@ -82,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cotravelling',
-        'USER': 'mb',
+        'USER': 'abgde',
         'PASSWORD': 'Ingenium6263',
         'HOST': 'localhost',
         'PORT': '',
@@ -111,7 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
+import locale
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Minsk'
@@ -135,9 +139,15 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '6978072'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'EN0b1P4ri6TKTCEmNsBM'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'zyza5rdvuXJYJZWSkJoS'
 SOCIAL_AUTH_VK_APP_USER_MODE = 2
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+#SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
+#SESSION_COOKIE_SECURE=False
+
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True

@@ -9,9 +9,8 @@ from . import views
 
 app_name = 'cotravelling'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('login/', views.login, name='login'),
+    path('findtrip/', views.findtrip, name='findtrip'),
     path('logout/', views.logout, name='logout'),
     path('chat/<int:chat_id>', views.chat, name='chat'),
-    path('about/', views.about, name='about'),
+    path('', views.about, name='about'),
 ]

@@ -7,6 +7,39 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+{% if request.user_agent.is_mobile %}
+<style>
+a {
+  font-size: 40px;
+}
+button[type="submit"] {
+  font-size: 30px;
+}
+th {
+  font-size: 30px;
+}
+input[type="text"] {
+  font-size: 30px;
+}
+input[type="number"] {
+  font-size: 30px;
+}
+select[class="custom-select"] {
+  font-size: 30px;
+  height: 2em;
+}
+
+small {
+  font-size: 20px;
+}
+table {
+  font-size: 30px;
+}
+
+
+</style>
+{% endif %}
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
@@ -21,19 +54,19 @@
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="/">Доступные поездки</a>
+      <a class="nav-link" href="/findtrip">Поездки</a>
     </li>
     {% if request.user.is_authenticated %}
     <li class="nav-item">
-      <a class="nav-link" href="/logout">Выйти</a>
+      <a class="nav-link" href="/logout?next={{request.path}}">Выйти</a>
     </li>
     {% else %}
     <li class="nav-item">
-      <a class="nav-link" href="/login/vk-oauth2">Войти</a>
+      <a class="nav-link" href="/login/vk-oauth2/?next=/findtrip">Войти</a>
     </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="/about">О нас</a>
+      <a class="nav-link" href="/">О нас</a>
     </li>
   </ul>
 
