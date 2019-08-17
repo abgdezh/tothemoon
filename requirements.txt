@@ -1,8 +1,0 @@
-Django
-dj-database-url
-dj-static
-gunicorn
-psycopg2
-django-social-auth
-bootstrap4
-django-tempus-dominus
