@@ -1,0 +1,72 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock title %}</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="../../static/cotravelling/css/bootstrap.css">
+        <link type="text/css" rel="stylesheet" href="../../static/cotravelling/css/base.css">
+        {% block css %}
+        {% endblock css %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+            <a href="/" class="navbar-brand">ToTheMoon</a>
+            <a class="nav-link" href="/">О нас <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/findtrip">Доступные поездки</a>
+            
+            {% if not auth %}
+            <div class="navbar-right ml-auto mr-1">
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
+                <button type="button" class="btn btn-primary">регистрация</button>
+            </div>
+
+            {% else %}
+            <div class="navbar-right ml-auto mr-1">
+                <a class="nav-link" href="#">Антон</a>
+            </div>
+
+            {% endif %}
+        </nav>
+
+        {% block content%} 
+        {% endblock %}
+
+        <footer class="page-footer">
+            <div class="container mw-75">
+                <div class="row mt-4 pt-3">
+                    <div class="col">
+                        <h6>Связаться с нами</h6>
+                    </div>
+                    <div class="col text-right">
+                        <h6>Социальные сети</h6>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h6>Контакты</h6>
+                    </div>
+                </div>
+                <div class="row mt-3 pb-3">
+                    <div class="col">
+                        <h6>Часто задаваемые вопросы</h6>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
