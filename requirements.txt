@@ -6,3 +6,6 @@ psycopg2
 django-social-auth
 bootstrap4
 django-tempus-dominus
+libsass
+django-compressor
+django-sass-processor
