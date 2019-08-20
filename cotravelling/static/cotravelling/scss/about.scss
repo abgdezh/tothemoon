@@ -1,0 +1,128 @@
+@import "../bootstrap-4.2.1/scss/functions";
+@import "../bootstrap-4.2.1/scss/variables";
+@import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
+
+h2 {
+    color: #4F4F4F;
+    font-weight: bold;
+}
+
+.main_container {
+    margin-top: 20px;
+}
+
+.subtext {
+    color: #828282;
+}
+
+.card-title {
+    color: #4F4F4F;
+}
+
+.card-text {
+    color: #606060;
+}
+
+.main-img_container {
+    position: relative;
+}
+
+.main_img::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom, transparent 0%, black 100%);
+    height: 30%;
+    width: 100%;
+}
+
+.long_name {
+    bottom: 25%;
+    color: white;
+}
+
+.image_container .btn_action {
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: white;
+}
+
+.card_default {
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 1px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: 0.4s;
+    background-color: #FAFAFA;
+}
+
+.card_default:hover {
+    transform: scale(1.01, 1.01);
+    box-shadow: 3px 3px 10px 5px rgba(0,0,0,0.20);
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+    .long_name {
+        font-size: 1.7rem;
+        color: #4F4F4F;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+
+    .btn_action {
+        left: 50%;
+        font-size: 15px;
+        color: white;
+        margin-top: 16px;
+    }
+
+    .main_container {
+        margin-top: 16px;
+
+        h2 {
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .subtext {
+            text-align: center;
+            display: block;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .main_img {
+        margin-top: 20px;
+    }
+    
+    .long_name {
+        font-size: 1.7rem;
+        color: #4F4F4F;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+
+    .btn_action {
+        left: 50%;
+        font-size: 15px;
+        color: white;
+        margin-top: 16px;
+    }
+
+    .main_container {
+        margin-top: 16px;
+
+        h2 {
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .subtext {
+            text-align: center;
+            display: block;
+        }
+    }
+}
