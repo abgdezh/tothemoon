@@ -3,35 +3,35 @@
 <div style="height:1em;"></div>
 
 {% if forbidden %}
-    <h1>Чтобы увидеть чат, нужно присоединиться к поездке.</h1>
+    <h1>Чтобы увидеть чат, нужно присоединиться к заказу.</h1>
 {% else %}
 
 <div class="w-100 p-3">
   <div class="row">
     <div class="container">
         <div>
-           {{trip_info.source}} → {{trip_info.target}}, {{trip_info.vehicle}}
+           {{order_info.source}} → {{order_info.target}}
         </div>
         <div>
-        {{trip_info.datetime}}
-        {% if trip_info.is_over %}
-        ({{trip_info.remaining_time}})
+        {{order_info.datetime}}
+        {% if order_info.is_over %}
+        ({{order_info.remaining_time}})
         {% endif %}
         </div>
         <div>
-        Поедут: {% for usertrip in participants %}{% if forloop.counter0 != 0 %}, {% endif %}
-        {%if usertrip.is_owner %}<strong>{% endif %}
-        {{usertrip.user.first_name}} {{usertrip.user.last_name}}{%if usertrip.is_owner %}</strong> (создатель поездки){% else %}
-        (<a href="/reject/{{usertrip.id}}">{% if request.user.id != usertrip.user_id %}исключить{% else %}отказаться{% endif %}</a>){% endif %}{% endfor %}
+        Собираются заказывать: {% for userorder in participants %}{% if forloop.counter0 != 0 %}, {% endif %}
+        {%if userorder.is_owner %}<strong>{% endif %}
+        {{userorder.user.first_name}} {{userorder.user.last_name}}{%if userorder.is_owner %}</strong> (создатель совместного заказа){% else %}
+        (<a href="/orders_reject/{{userorder.id}}">{% if request.user.id != userorder.user_id %}исключить{% else %}отказаться{% endif %}</a>){% endif %}{% endfor %}
         </div>
         {% if requested_participants %}
         <div>
-        Хотят поехать: {% for usertrip in requested_participants %}{% if forloop.counter0 != 0 %}, {% endif %}
-        {{usertrip.user.first_name}} {{usertrip.user.last_name}} (<a href="/accept/{{usertrip.id}}">принять</a> | <a href="/reject/{{usertrip.id}}">отказать</a>){% endfor %}
+        Хотят тоже заказать: {% for userorder in requested_participants %}{% if forloop.counter0 != 0 %}, {% endif %}
+        {{userorder.user.first_name}} {{userorder.user.last_name}} (<a href="/orders_accept/{{userorder.id}}">принять</a> | <a href="/orders_reject/{{userorder.id}}">отказать</a>){% endfor %}
         </div>
         {% endif %}
         <div id="messages">
-        {% include "cotravelling/message.html" %}
+        {% include "cotravelling/orders_message.html" %}
         </div>
         <div style="height:5em;"></div>
     </div>
@@ -58,13 +58,13 @@
 
 <script>
     var last_message_id = {{last_message_id}};
-    var trip_id = {{trip_info.id}};
+    var order_id = {{order_info.id}};
 </script>
 
 <script>
     function load() {
         $.ajax({
-            url: "/load_messages/" + trip_id + "/" + last_message_id,
+            url: "/load_orders_messages/" + order_id + "/" + last_message_id,
             success: function(result) {
                 if (result["new_last_message_id"] == undefined) {
                     console.log(result);
@@ -85,7 +85,7 @@
         e.preventDefault();
         $.ajax({
             'type': "POST",
-            'url': "/add_message/" + trip_id,
+            'url': "/add_orders_message/" + order_id,
             'data': {
                 'content': document.getElementById("message_text").value,
                 'csrfmiddlewaretoken': '{{ csrf_token }}',

@@ -1,5 +1,5 @@
 from django.template.loader import render_to_string
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.urls import reverse
@@ -7,8 +7,6 @@ from django.urls import reverse
 from .models import *
 
 from django.contrib.auth.decorators import login_required
-
-from django.contrib.auth import logout as django_logout
 
 from django.db import transaction
 
@@ -99,7 +97,7 @@ def handle_post_request(request):
         return ask_trip(request)
 #    elif request.user and request.user.is_authenticated and str(request.POST).find("accept") != -1:
 #        return accept(request)
-    return render(request, 'cotravelling/findtrip.html', context)
+    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
 
 
 def findtrip(request):
@@ -127,6 +125,7 @@ def load_trips(request, **kwargs):
     user = kwargs.get("user")
     days = 7
     context = build_context(date_from, days, user)
+    print("context")
     return JsonResponse({"page" : render_to_string('cotravelling/trip.html', context, request=request),
                          "date" : kwargs['datetime'],
                          "new_date" : datetime.strftime(date_from + timedelta(days), '%Y-%m-%d')
@@ -142,7 +141,7 @@ def add_trip(request):
             trip.vehicle = request.POST['vehicle']
             trip.datetime = timezone.make_aware(datetime.strptime(request.POST['datetime'], '%d.%m.%Y %H:%M'))
             trip.free_places = request.POST['free_places']
-            trip.is_open = 'is_open' in request.POST
+            trip.is_closed = 'is_closed' in request.POST
             trip.save()
             user_trip = UserTrip(user=request.user, trip=trip, is_owner=True, admitted=True)
             user_trip.save()
@@ -156,7 +155,7 @@ def join_trip(request):
         trip_id = [int(s.replace("join", "")) for s in request.POST if s.startswith("join")][0]
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
-            if trip.free_places > 0 and trip.is_open:
+            if trip.free_places > 0 and not trip.is_closed:
                 trip.free_places -=1
                 user_trip = UserTrip(user=request.user, trip=trip, is_owner=False, admitted=True)
                 trip.save()
@@ -231,12 +230,6 @@ def ask_trip(request):
     return HttpResponseRedirect(reverse('cotravelling:findtrip'))
 
 
-def logout(request):
-    django_logout(request)
-    print(request)
-    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
-
-
 def load_messages(request, **kwargs):
     last_message_id = kwargs['last_message_id']
     trip_id = kwargs['trip_id']
@@ -292,6 +285,3 @@ def add_message(request, **kwargs):
         print(e)
     return JsonResponse({})
 
-
-def about(request):
-    return render(request, 'cotravelling/about.html', {})

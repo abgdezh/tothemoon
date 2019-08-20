@@ -14,10 +14,7 @@
             <td>
             <div>{{trip.source}} → {{trip.target}}</div>
             <div>
-            {% if trip.vehicle == "taxi" %} Такси
-            {% elif trip.vehicle == "carsharing" %} Каршеринг
-            {% elif trip.vehicle == "owncar" %} Своя машина
-            {% endif %}
+            {{trip.vehicle}}
             </div>
             <div><small>{{trip.time}}</small></div>
             <div><small>{{trip.free_places}}
@@ -51,7 +48,7 @@
                     <div class="input-group mb-3">
                     <button type="submit" class="btn btn-warning" name="leave{{trip.id}}">Не запрашивать участие</button>
                     </div>
-                    {% elif not trip.is_open %}
+                    {% elif trip.is_closed %}
                     <div class="input-group mb-3">
                     <button type="submit" class="btn btn-info" name="ask{{trip.id}}">Запросить участие</button>
                     </div>
