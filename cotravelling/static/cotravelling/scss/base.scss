@@ -1,0 +1,85 @@
+$theme-colors: (
+  "primary": #0D4A27,
+  "secondary": #8395A7
+);
+
+@import "../bootstrap-4.2.1/scss/bootstrap.scss";
+@import "../bootstrap-4.2.1/scss/functions";
+@import "../bootstrap-4.2.1/scss/variables";
+@import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
+
+body {
+    font-family: 'Fira Sans', sans-serif;
+    background-color: #F3F3F3;
+}
+
+.btn_action {
+    background-color: #E2A26A;
+    border-radius: 40px;
+    padding: 15px 40px 15px 40px;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #71D578;
+    color: white;
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+    html {
+        font-size: 1rem;
+    }
+
+    .navbar {
+        height: 56px;
+        border-bottom: 1px solid #0D4A27;
+
+        img {
+            width: 2rem;
+        }
+    }
+
+    .navbar-brand {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 575px) {
+    html {
+        font-size: 1rem;
+    }
+    
+    .navbar {
+        height: 56px;
+        border-bottom: 1px solid #0D4A27;
+
+        img {
+            width: 2rem;
+        }
+    }
+    
+    .navbar-brand {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-size: 1.4rem;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 1rem;
+    }
+
+    .navbar {
+        height: 10%;
+        max-height: 200px;
+    }
+
+    .navbar-brand {
+        position: relative;
+    }
+}

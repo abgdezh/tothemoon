@@ -25,7 +25,7 @@ SECRET_KEY = 'bb2l*kj582nxwjl3cg)12(ide)slbi_(rui_=@wz_4o-ven0(k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['84.201.167.9', 'shareandsave.ru']
+ALLOWED_HOSTS = ['10.55.131.233', '127.0.0.1', 'shareandsave.ru', '84.201.167.9']
 
 
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_user_agents',
+    'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,16 @@ SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Configuration for SCSS 
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+# Django Sass
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR,'static')
 
 #SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 #SESSION_COOKIE_SECURE=False

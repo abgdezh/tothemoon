@@ -1,2 +1,7 @@
 .vscode
 tothemoon/settings.py
+log
+errlog
+*__pycache__*
+*/migrations/*
+*.pyc
