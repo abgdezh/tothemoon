@@ -1,2 +1,5 @@
 .vscode
 tothemoon/settings.py
+tothemoon/__pycache__
+cotravelling/__pycache__
+cotravelling/migrations
