@@ -2,41 +2,49 @@
 
 {% block title %}О нас{% endblock title %}
 
+{% load sass_tags %}
+
 {% block css %}
-<link type="text/css" rel="stylesheet" href="../../static/cotravelling/css/about.css">
+<link href="{% sass_src 'cotravelling/scss/about.scss' %}" rel="stylesheet" type="text/css" />
 {% endblock css %}
 
 
 {% block content%}
 <div class="main-img_container text-center container-fluid">
     <section class="row no-gutter align-items-center">
-        <div class="col-lg-12 text-center p-0 d-flex align-items-center">
+        <div class="col-lg-12 text-center p-0 d-flex align-items-center image_container">
             <div class="position-realtive mx-auto main_img">
                 <img src="../../static/cotravelling/img/group_photo.png" class="img-fluid position-relative mx-auto" alt="People shopping">
             </div>
-            <h1 class="font-weight-bold w-100 position-absolute my-auto long_name">Сервис совместных покупок на Физтехе</h1>
-            <button type="button" class="position-absolute btn btn-lg btn_action" onclick="location.href='/findtrip';">Найти поездку</button>
+            <h1 class="font-weight-bold w-100 position-absolute my-auto long_name d-none d-lg-block">Сервис совместных покупок на Физтехе</h1>
+            <button type="button" class="position-absolute btn btn-lg btn_action d-none d-lg-block" onclick="location.href='/findtrip';">Найти поездку</button>
         </div>
     </section>
+    <div class="row no-gutter mt-4 d-block d-lg-none">
+        <div class="col-12 align-items-center">
+            <h1 class="font-weight-bold w-100 my-auto long_name">Сервис совместных покупок на Физтехе</h1>
+            <button type="button" class="btn btn-lg btn_action" onclick="location.href='/findtrip';">Найти поездку</button>
+        </div>
+    </div>
 </div>
 
-<div class="container mw-75" style="width: 70%">
+<div class="container mw-75 main_container" style="width: 90%">
     <div class="row justify-content-center no-gutter">
         <div class="col-xl-3 col-lg-4 col-md-12 " align="center">
-            <img src="../../static/cotravelling/img/logo_mfti.png">
+            <img src="../../static/cotravelling/img/logo_mfti.png" style="max-width: 100%;">
         </div>
-        <div class="col-xl-5 col-lg-6 col-md-7 col-sm-6 align-self-center offset-lg-2 offset-xl-2">
+        <div class="col-xl-5 col-lg-6 col-md-10 col-sm-10 align-self-center">
             <h2>Быстро. Удобно. В компании физтехов</h2>
             <span class="subtext">Наш сервис поможет найти компанию для поездок за покупками или заказов еды из кафе и ресторанов</span>
         </div>
     </div>
     
-    <div class="row justify-content-center no-gutter flex-column-reverse flex-lg-row mt-5">
-        <div class="col-xl-5 col-lg-6 col-md-7 align-self-center flex-column-reverse flex-lg-row">
+    <div class="row justify-content-center no-gutter mt-5">
+        <div class="col-xl-5 col-lg-6 col-md-10 col-sm-10 order-2 order-sm-2 order-md-2 order-lg-1 align-self-center">
             <h2>Доставка еды от любой суммы</h2>
             <span class="subtext">Заказывайте вместе из ДоДо Пицца, Доминос, Якитории или других ресторанов и преодолейте минимальную сумму на доставку</span>
         </div>
-        <div class="col-xl-3 col-lg-4 col-md-12" align="center">
+        <div class="col-xl-3 col-lg-4 col-md-12 order-1 order-sm-1 order-md-1 order-lg-2" align="center">
             <img src="../../static/cotravelling/img/food_icon.png" style="width: 100%; max-width: 300px;">
         </div>
     </div>
@@ -44,7 +52,7 @@
     <h2 class="text-center mt-5">Как заказать еду?</h2>
 
     <div class="row justify-content-center no-gutter mt-1">
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default">
                 <img class="card-img-top" src="../../static/cotravelling/img/new_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">
@@ -53,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default">
                 <img class="card-img-top" src="../../static/cotravelling/img/handshake_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">
@@ -62,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default">
                 <img class="card-img-top" src="../../static/cotravelling/img/buy_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">
@@ -77,7 +85,7 @@
         <div class="col-xl-3 col-lg-4 col-md-12" align="center">
             <img src="../../static/cotravelling/img/car_icon.png" style="width: 100%; max-width: 300px; cursor: pointer;" onclick="location.href='/findtrip';">
         </div>
-        <div class="col-xl-5 col-lg-6 col-md-7 col-sm-6 align-self-center" onclick="location.href='/findtrip';" style="cursor: pointer;">
+        <div class="col-xl-5 col-lg-6 col-md-10 col-sm-10 align-self-center" onclick="location.href='/findtrip';" style="cursor: pointer;">
             <h2>До любимого магазина на машине</h2>
             <span class="subtext">Найдите тех, кто едет в Ваш любимый магазин на машине или такси и присоединитесь к ним</span>
         </div>
@@ -86,7 +94,7 @@
     <h2 class="text-center mt-5">Как собраться на шоппинг?</h2>
 
     <div class="row justify-content-center no-gutter mt-1">
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default" onclick="location.href='/findtrip';">
                 <img class="card-img-top" src="../../static/cotravelling/img/new_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">
@@ -95,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default" onclick="location.href='/findtrip';">
                 <img class="card-img-top" src="../../static/cotravelling/img/handshake_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">
@@ -104,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-7 mt-3" align="center" >
+        <div class="col-xl-4 col-lg-4 col-md-10 mt-3" align="center" >
             <div class="card card_default" onclick="location.href='/findtrip';">
                 <img class="card-img-top" src="../../static/cotravelling/img/buy_icon.png" style="max-width: 250px">
                 <div class="card-body text-left">

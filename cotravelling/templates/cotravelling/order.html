@@ -1,158 +1,54 @@
-{% include "cotravelling/base.html" %}
-
-
-{% if auth %}
-
-<style>
-/* Useful css to scss converter
-* http://sebastianpontow.de/css2compass/
-*/
-//colors
-$color_quill_gray_approx: #d4d4d4;
-$white: #fff;
-$color_gray_nurse_approx: #e9e9e9;
-
-.autocomplete {
-	position: relative;
-	display: inline-block;
-}
-.autocomplete-items {
-	position: absolute;
-	z-index: 99;
-	top: 100%;
-	left: 0;
-	right: 0;
-}
-</style>
-
-<center><h1> Добавить поездку </h1></center>
-<form action="{{ request.get_full_path }}" method="post">
-    
-    <div class="w-100 p-3" style="background-color: orange;">
-    <div class="d-flex justify-content-center flex-wrap " >
-    {% csrf_token %}
-        <div class="p-2">
-          <div class="input-group">
-            <input type="text" id="target" name="target" placeholder="Куда?" class="form-control autocomplete" autocomplete="off" required/>
-          </div>
-        </div>
-        <div class="p-2">
-          <div class="input-group">
-            <input type="text" id="source" name="source" placeholder="Откуда?" class="form-control autocomplete" autocomplete="off" required/>
-          </div>
-        </div>
-        <div class="p-2">
-          <select class="custom-select" name="vehicle" required >
-            <option disabled selected>На чём?</option>
-            <option value="taxi">Такси</option>
-            <option value="carsharing">Каршеринг</option>
-            <option value="owncar">Своя машина</option>
-          </select>
-        </div>
-        <div class="p-2">
-            <div class="form-group">
-                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" autocomplete="off" name="datetime" placeholder="Когда?" required/>
-                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="p-2">
-        <input type="number" min="1" name="free_places" placeholder="Сколько свободных мест?" class="form-control" required/>
-        </div>
-        <div class="p-2">
-        <button type="submit" class="btn btn-primary" required>Добавить поездку</button>
-        </div>
-
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker2').datetimepicker({
-                    locale: 'ru'
-                });
-            });
-        </script>
-    </div>
-    
-    </div>
-</form>
-{% endif %}
-
-
-<!--<div class="w-100 p-3">-->
-<!--<div class="row">-->
-<div class="d-flex justify-content-center flex-wrap " >
-  {% for trip_column in trips %}
+{% for order_column in orders %}
   <div class="p-2">
-<!--  <div class="col" style="width:33%">-->
-  {% if trip_column %}
-    <table class="table" style="background-color:#DDF0FF">
-    {% if forloop.counter0 == 0 %}
-    <a href="/findtrip?from={{link_prev_date}}">Прошлые три дня</a>
-    {% elif forloop.counter0 == 1 %}
-    <a>&nbsp;</a>
-    {% elif forloop.counter0 == 2 %}
-    <a href="/findtrip?from={{link_next_date}}">Следующие три дня</a>
-    {% endif %}
+  {% if order_column %}
+<table class="table" style="background-color:#DDF0FF">
     <thead>
     <tr>
-      <th scope="col-xs-3">{{trip_column.date}}</th>
+      <th scope="col-xs-3">{{order_column.date}}</th>
       <th scope="col-xs-3">Участники</th>
       <th scope="col-xs-3"></th>
     </tr>
     </thead>
-    {% for trip in trip_column.trips %}
+    {% for order in order_column.orders %}
         <tr>
             <td>
-            <div>{{trip.trip_info.source}}</div>
-            <div>{{trip.trip_info.target}}</div>
-            <div>
-            {% if trip.trip_info.vehicle == "taxi" %} Такси
-            {% elif trip.trip_info.vehicle == "carsharing" %} Каршеринг
-            {% elif trip.trip_info.vehicle == "owncar" %} Своя машина
-            {% endif %}
-            </div>
-            <div><small>{{trip.trip_info.time}}</small></div>
-            <div><small>{{trip.trip_info.free_places}}
-            {% if trip.trip_info.free_places == 1 %}
-            место
-            {% elif trip.trip_info.free_places <= 4 and trip.trip_info.free_places >= 2%}
-            места
-            {% else %}
-            мест
-            {% endif %}
-            </small></div>
+            <div>{{order.source}} → {{order.target}}</div>
+            <div><small>{{order.time}}</small></div>
             </td>
             <td>
-<!--            <ul class="list-group">-->
-            {% for user in trip.users %}
+            {% for user in order.users %}
                 <small>{{ user }}</small><br/>
             {% endfor %}
-<!--            </ul>-->
             </td>
             <td>
             {% if auth %}
                 <form action="{{ request.get_full_path }}" method="post">
                     {% csrf_token %}
-                    {% if trip.is_owner%}
+                    {% if order.is_owner%}
+<!--                    <div class="input-group mb-3">-->
+<!--                    <button type="submit" class="btn btn-danger" name="delete{{order.id}}">Удалить заказ</button>-->
+<!--                    </div>-->
+                    {% elif order.joining and order.admitted%}
                     <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-danger" name="delete{{trip.trip_info.id}}">Удалить поездку</button>
+                    <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Отказаться</button>
                     </div>
-                    {% elif trip.joining%}
+                    {% elif order.joining and not order.admitted%}
                     <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-warning" name="leave{{trip.trip_info.id}}">Отказаться</button>
+                    <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Не запрашивать участие</button>
                     </div>
-                    {% elif trip.trip_info.free_places > 0 %}
+                    {% elif order.is_closed %}
                     <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-primary" name="join{{trip.trip_info.id}}">Присоединиться</button>
+                    <button type="submit" class="btn btn-info" name="ask{{order.id}}">Запросить участие</button>
+                    </div>
+                    {% else %}
+                    <div class="input-group mb-3">
+                    <button type="submit" class="btn btn-primary" name="join{{order.id}}">Присоединиться</button>
                     </div>
                     {% endif %}
                 </form>
             {% endif %}
-            {% if trip.joining %}
-                <form action="/chat/{{trip.trip_info.id}}" method="get">
+            {% if order.joining and order.admitted %}
+                <form action="/orders_chat/{{order.id}}" method="get">
                 <button type="submit" class="btn btn-primary">Открыть чат</button>
                 </form>
             {% endif %}
@@ -160,156 +56,11 @@ $color_gray_nurse_approx: #e9e9e9;
         </tr>
     {% endfor %}
     </table>
-    
 {% else %}
-    <p>No trips are available.</p>
+    <p>No orders are available.</p>
 {% endif %}</div>
 {% endfor %}
-</div>
-<!--</div>-->
-
 <script>
-"use strict";
-
-let autocomplete = (inp, arr) => {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  let currentFocus;
-  /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
-    let a, //OUTER html: variable for listed content with html-content
-      b, // INNER html: filled with array-Data and html
-      i, //Counter
-      val = this.value;
-
-    /*close any already open lists of autocompleted values*/
-    closeAllLists();
-
-    if (!val) {
-      return false;
-    }
-
-    currentFocus = -1;
-
-    /*create a DIV element that will contain the items (values):*/
-    a = document.createElement("DIV");
-    
-    a.setAttribute("id", this.id + "autocomplete-list");
-    a.setAttribute("class", "autocomplete-items list-group text-left");
-    
-    /*append the DIV element as a child of the autocomplete container:*/
-    this.parentNode.appendChild(a);
-
-    /*for each item in the array...*/
-    for (i = 0; i < arr.length; i++) {
-      /*check if the item starts with the same letters as the text field value:*/
-      var pos_begin = arr[i].toLowerCase().indexOf(val.toLowerCase());
-      if (pos_begin != -1) {
-        /*create a DIV element for each matching element:*/
-        b = document.createElement("DIV");
-        b.setAttribute("class","list-group-item list-group-item-action");
-        /*make the matching letters bold:*/
-        b.innerHTML = arr[i].substr(0, pos_begin);
-        b.innerHTML += "<strong>" + arr[i].substr(pos_begin, val.length) + "</strong>";
-        b.innerHTML += arr[i].substr(pos_begin + val.length);
-        /*insert a input field that will hold the current array item's value:*/
-        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-        /*execute a function when someone clicks on the item value (DIV element):*/
-        b.addEventListener("click", function(e) {
-          /*insert the value for the autocomplete text field:*/
-          inp.value = this.getElementsByTagName("input")[0].value;
-          /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-          closeAllLists();
-        });
-        a.appendChild(b);
-      }
-    }
-  });
-  
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-    var x = document.getElementById(this.id + "autocomplete-list");
-    if (x) x = x.getElementsByTagName("div");
-    if (e.keyCode == 40) {
-      /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-      currentFocus++;
-      /*and and make the current item more visible:*/
-      addActive(x);
-    } else if (e.keyCode == 38) {
-      //up
-      /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-      currentFocus--;
-      /*and and make the current item more visible:*/
-      addActive(x);
-    } else if (e.keyCode == 13) {
-      /*If the ENTER key is pressed, prevent the form from being submitted,*/
-      e.preventDefault();
-      if (currentFocus > -1) {
-        /*and simulate a click on the "active" item:*/
-        if (x) x[currentFocus].click();
-      }
-    }
-  });
-  
-  let addActive = (x) => {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = x.length - 1;
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("active");
-  }
-  
-  let removeActive = (x) => {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (let i = 0; i < x.length; i++) {
-      x[i].classList.remove("active");
-    }
-  }
-  
-  let closeAllLists = (elmnt) => {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
-  
-  /*execute a function when someone clicks in the document:*/
-  document.addEventListener("click", function(e) {
-    closeAllLists(e.target);
-  });
-  
-};
-
-let targets = [
-  "Додо пицца",
-  "Метро Ховрино",
-  "Метро Алтуфьево",
-  "IKEA",
-  "Metro",
-  "Окей",
-  "Рио",
-  "Мираторг"
-];
-let sources = [
-  "1 общежитие",
-  "2 общежитие",
-  "3 общежитие",
-  "7 общежитие",
-  "Площадь перед НК",
-  "12 общежитие",
-];
-
-autocomplete(document.getElementById("target"), targets);
-autocomplete(document.getElementById("source"), sources);
-
+  var until_date = "{{until_date}}";
+  var user = {{user.id}};
 </script>
