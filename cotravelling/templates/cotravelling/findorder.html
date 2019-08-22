@@ -1,0 +1,169 @@
+{% include "cotravelling/base.html" %}
+
+{% if user.is_authenticated %}
+
+<style>
+/* Useful css to scss converter
+* http://sebastianpontow.de/css2compass/
+*/
+//colors
+$color_quill_gray_approx: #d4d4d4;
+$white: #fff;
+$color_gray_nurse_approx: #e9e9e9;
+
+.autocomplete {
+	position: relative;
+	display: inline-block;
+}
+.autocomplete-items {
+	position: absolute;
+	z-index: 99;
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+</style>
+
+
+<center><h1>Собрать людей, чтобы вместе что-нибудь заказать</h1></center>
+<form action="{{ request.get_full_path }}" method="post">
+    
+    <div class="w-100 p-3" style="background-color: orange;">
+    <div class="d-flex justify-content-center flex-wrap " >
+    {% csrf_token %}
+        <div class="p-2">
+          <select class="selectpicker" data-live-search="true" name="source" required>
+            <option disabled selected value="">Откуда?</option>
+            <option>Додо пицца</option>
+            <option>Бизон пицца</option>
+            <option>Пицца суши вок</option>
+            <option>IKEA</option>
+            <option>Окей</option>
+          </select>
+
+        </div>
+        <div class="p-2">
+          <select class="selectpicker" data-live-search="true" name="target" required>
+            <option disabled selected value="">Куда?</option>
+            <option>1 общежитие</option>
+            <option>2 общежитие</option>
+            <option>3 общежитие</option>
+            <option>4 общежитие</option>
+            <option>6 общежитие</option>
+            <option>7 общежитие</option>
+            <option>8 общежитие</option>
+            <option>9 общежитие, любой подъезд</option>
+            <option>9 общежитие, 1 подъезд</option>
+            <option>9 общежитие, 2 подъезд</option>
+            <option>9 общежитие, 3 подъезд</option>
+            <option>9 общежитие, 4 подъезд</option>
+            <option>10 общежитие</option>
+            <option>11 общежитие</option>
+            <option>12 общежитие</option>
+            <option>Площадь перед НК</option>
+            <option>КПМ</option>
+            
+          </select>
+        </div>
+        
+        <div class="p-2">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" name="datetime" autocomplete="off" required maxlength=16/>
+                    <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker').datetimepicker({
+                        locale: 'ru'
+                    });
+                });
+            </script>
+            <style>
+                .bootstrap-datetimepicker-widget.dropdown-menu { width: auto !important; }
+                .bootstrap-datetimepicker-widget table td.cw {
+        font-size: .25em;
+        height: 40px;
+        line-height: 40px;
+        color: #6c757d; }
+            </style>
+        </div>
+        <div class="p-2">
+          <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" name="is_closed"/>
+              <label class="custom-control-label" for="customCheck1">Хочу предварительно<br/>подтверждать участников</label>
+          </div>
+        </div>
+        <div class="p-2">
+        <button type="submit" class="btn btn-primary" name="add_order" required>Добавить заказ</button>
+        </div>
+    </div>
+    
+    </div>
+</form>
+{% endif %}
+
+
+<div class="w-100 p-3">
+<div class="d-flex flex-column align-items-center">
+  <div id="days_list">
+  {% include "cotravelling/order.html" %}
+  </div>
+</div>
+</div>
+
+<script>
+    function load() {
+        console.log("load");
+        $.ajax({
+            url: "/load_orders/" + until_date + "/" + user,
+            success: function(result) {
+                if (result["date"] == undefined) {
+                    console.log(result);
+                }
+                console.log(result["date"] + " " + until_date);
+                if (result["date"] == window.until_date) {
+                    $("#days_list").append(result["page"]);
+                    window.until_date = result["new_date"];
+                }
+            },
+        });
+        
+    }
+    window.onscroll = function(ev) {
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 10) {
+            load();
+        }
+    };
+    
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    async function func() {
+      console.log(document.body.offsetHeight + " " + window.outerHeight + " " + window.innerHeight + " " + window.pageYOffset);
+      while ((document.body.offsetHeight <= window.innerHeight) || (document.body.offsetHeight <= window.outerHeight)) {
+          load();
+          await sleep(50);
+          console.log(document.body.offsetHeight + " " + window.outerHeight + " " + window.innerHeight + " " + window.pageYOffset);
+      }
+    }
+    
+    async function al() {
+        while (true) {
+            
+            if (window.innerHeight + window.pageYOffset > document.body.offsetHeight) {
+                load();
+            }
+            await sleep(100);
+        }
+    }
+    
+    al();
+    
+    func();
+
+</script>

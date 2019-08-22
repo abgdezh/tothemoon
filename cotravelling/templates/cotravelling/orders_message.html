@@ -1,0 +1,17 @@
+{% for message in messages %}
+{% if message.author == request.user %}
+<div class="row justify-content-end">
+{% else %}
+<div class="row justify-content-start">
+{% endif %}
+    <div class="col-xs-4" style="margin-top: 1em">
+        {% if message.author != request.user %}
+        {{message.author_info}}:
+        {% endif %}
+        <div class="alert alert-primary" role="alert" style="margin-bottom: 0;{% if request.user_agent.is_mobile %} font-size:30px {% endif %}">
+            {{message.text}}
+        </div>
+        <small>{{message.datetime}}</small>
+    </div>
+</div>
+{% endfor %}

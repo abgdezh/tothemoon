@@ -1,0 +1,113 @@
+{% include "cotravelling/base.html" %}
+
+<div style="height:1em;"></div>
+
+{% if forbidden %}
+    <h1>Чтобы увидеть чат, нужно присоединиться к заказу.</h1>
+{% else %}
+
+<div class="w-100 p-3">
+  <div class="row">
+    <div class="container">
+        <div>
+           {{order_info.source}} → {{order_info.target}}
+        </div>
+        <div>
+        {{order_info.datetime}}
+        {% if order_info.is_over %}
+        ({{order_info.remaining_time}})
+        {% endif %}
+        </div>
+        <div>
+        Собираются заказывать: {% for userorder in participants %}{% if forloop.counter0 != 0 %}, {% endif %}
+        {%if userorder.is_owner %}<strong>{% endif %}
+        {{userorder.user.first_name}} {{userorder.user.last_name}}{%if userorder.is_owner %}</strong> (создатель совместного заказа){% else %}
+        (<a href="/orders_reject/{{userorder.id}}">{% if request.user.id != userorder.user_id %}исключить{% else %}отказаться{% endif %}</a>){% endif %}{% endfor %}
+        </div>
+        {% if requested_participants %}
+        <div>
+        Хотят тоже заказать: {% for userorder in requested_participants %}{% if forloop.counter0 != 0 %}, {% endif %}
+        {{userorder.user.first_name}} {{userorder.user.last_name}} (<a href="/orders_accept/{{userorder.id}}">принять</a> | <a href="/orders_reject/{{userorder.id}}">отказать</a>){% endfor %}
+        </div>
+        {% endif %}
+        <div id="messages">
+        {% include "cotravelling/orders_message.html" %}
+        </div>
+        <div style="height:5em;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="fixed-bottom" style="background-color: #eee;height:{% if request.user_agent.is_mobile %}8em{% else %}5em{% endif %};">
+    <form action="" autocomplete="off">
+        {% csrf_token %}
+        <div class="w-100 p-3">
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    <div class="input-group">
+                        <input type="text" name="text" placeholder="Напишите сообщение" class="form-control" maxlength=200 id="message_text"></textarea>
+                        <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="send_button">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var last_message_id = {{last_message_id}};
+    var order_id = {{order_info.id}};
+</script>
+
+<script>
+    function load() {
+        $.ajax({
+            url: "/load_orders_messages/" + order_id + "/" + last_message_id,
+            success: function(result) {
+                if (result["new_last_message_id"] == undefined) {
+                    console.log(result);
+                }
+                console.log(result["new_last_message_id"] + " " + last_message_id);
+                if (result["last_message_id"] == window.last_message_id) {
+                    $("#messages").append(result["page"]);
+                    window.last_message_id = result["new_last_message_id"];
+                }
+                if (result["new_last_message_id"] != result["last_message_id"]) {
+                    window.scrollTo(0,document.body.scrollHeight);
+                }
+            },
+        });
+    }
+    
+    $("#send_button").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            'type': "POST",
+            'url': "/add_orders_message/" + order_id,
+            'data': {
+                'content': document.getElementById("message_text").value,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            'success': function(result) {
+                document.getElementById("message_text").value = "";
+            }
+        });
+    });
+    
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    async function update() {
+        while (true) {
+            load();
+            await sleep(100);
+        }
+    }
+    
+    update();
+</script>
+
+{% endif %}
