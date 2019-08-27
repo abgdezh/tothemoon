@@ -133,37 +133,5 @@ $color_gray_nurse_approx: #e9e9e9;
         });
         
     }
-    window.onscroll = function(ev) {
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 10) {
-            load();
-        }
-    };
-    
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    
-    async function func() {
-      console.log(document.body.offsetHeight + " " + window.outerHeight + " " + window.innerHeight + " " + window.pageYOffset);
-      while ((document.body.offsetHeight <= window.innerHeight) || (document.body.offsetHeight <= window.outerHeight)) {
-          load();
-          await sleep(50);
-          console.log(document.body.offsetHeight + " " + window.outerHeight + " " + window.innerHeight + " " + window.pageYOffset);
-      }
-    }
-    
-    async function al() {
-        while (true) {
-            
-            if (window.innerHeight + window.pageYOffset > document.body.offsetHeight) {
-                load();
-            }
-            await sleep(100);
-        }
-    }
-    
-    al();
-    
-    func();
 
 </script>

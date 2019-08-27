@@ -108,9 +108,9 @@ def findorder(request):
     
     user_agent = get_user_agent(request)
     if user_agent.is_mobile:
-        days = 1
+        days = 3
     else:
-        days = 1
+        days = 3
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user

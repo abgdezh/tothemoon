@@ -1,5 +1,6 @@
+<div class="d-flex" name="calendar_flex">
 {% for order_column in orders %}
-<div class="p-2">
+<div class="p-2" name="day_column">
   {% if order_column %}
   <div class="day">
     <div class="date">{{order_column.date}}</div>
@@ -61,6 +62,7 @@
   {% endif %}
 </div>
 {% endfor %}
+</div>
 <script>
   var until_date = "{{until_date}}";
   var user = {{user.id}};

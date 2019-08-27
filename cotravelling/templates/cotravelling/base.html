@@ -79,6 +79,20 @@ div[class="break"] {
   height: 0px; 
   overflow: hidden;
 }
+
+div[name="day_column"] {
+  flex-basis:33%;
+}
+
+div[name="calendar_flex"] {
+  flex-wrap: wrap;
+  {% if request.user_agent.is_mobile %}
+  flex-direction: column;
+  {% else %}
+  flex-direction: row;
+  {% endif %}
+  justify-content: center;
+}
 </style>
 
 
