@@ -77,7 +77,7 @@ def build_context(date_from, days, user):
     orders = [build_order(date_from + timedelta(i), user) for i in range(days)]
     context = {'orders': 
                [{'orders' : orders[i], 
-                 'date' : datetime.strftime(date_from + timedelta(i), "%a. %d.%m."),
+                 'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
                 }
                  for i in range(days)],
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
