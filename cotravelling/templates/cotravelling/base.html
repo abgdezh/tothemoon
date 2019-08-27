@@ -1,3 +1,4 @@
+<head>
 {# Load the tag library #}
 {% load bootstrap4 %}
 {# Load the tag library #}
@@ -78,6 +79,20 @@ div[class="break"] {
   height: 0px; 
   overflow: hidden;
 }
+
+div[name="day_column"] {
+  flex-basis:33%;
+}
+
+div[name="calendar_flex"] {
+  flex-wrap: wrap;
+  {% if request.user_agent.is_mobile %}
+  flex-direction: column;
+  {% else %}
+  flex-direction: row;
+  {% endif %}
+  justify-content: center;
+}
 </style>
 
 
@@ -90,6 +105,91 @@ div[class="break"] {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/i18n/defaults-ru_RU.js"></script>
 
+<style>
+.day {
+  margin-bottom: 50px;
+}
+.day .date {
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
+}
+.collab {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+.collab .time {
+  padding: 0 3px;
+  float: left;
+  margin-right: 10px;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
+}
+.collabs.trips .time {
+  background: #b4fffc;
+}
+.collabs.orders .time {
+  background: #fff9b4;
+}
+.collab .info {
+  flex: 1;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
+}
+.collab .route {
+  font-weight: bold;
+  display: inline;
+}
+.collab .route span {
+  color: #888;
+}
+.collab .vehicle {
+  display: inline;
+  {% if request.user_agent.is_mobile %}
+  font-size: 0.75em;
+  {% else %}
+  font-size: 12px;
+  {% endif %}
+  border: 1px solid #ddd;
+  padding: 0 3px;
+  color: #777;
+  white-space: nowrap;
+}
+.collab .heading {
+  margin-bottom: 10px;
+}
+.no-collabs {
+  color: #777;
+  padding: 10px 0;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
+}
+.collab .free-places {
+  color: #777;
+}
+.collab .no-free-places {
+  color: #c30606;
+}
+.collab .actions {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.collab .actions form {
+  margin: 0;
+}
+</style>
+
+</head>
 <body style="background-color:#F9FDFE">
 
 <!-- A grey horizontal navbar that becomes vertical on small screens -->

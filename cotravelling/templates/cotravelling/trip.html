@@ -1,77 +1,82 @@
+<div class="d-flex" name="calendar_flex">
 {% for trip_column in trips %}
-  <div class="p-2">
+<div class="p-2" name="day_column">
   {% if trip_column %}
-<table class="table" style="background-color:#DDF0FF">
-    <thead>
-    <tr>
-      <th scope="col-xs-3">{{trip_column.date}}</th>
-      <th scope="col-xs-3">Участники</th>
-      <th scope="col-xs-3"></th>
-    </tr>
-    </thead>
-    {% for trip in trip_column.trips %}
-        <tr>
-            <td>
-            <div>{{trip.source}} → {{trip.target}}</div>
-            <div>
-            {{trip.vehicle}}
-            </div>
-            <div><small>{{trip.time}}</small></div>
-            <div><small>{{trip.free_places}}
-            {% if trip.free_places == 1 %}
-            место
-            {% elif trip.free_places <= 4 and trip.free_places >= 2%}
-            места
-            {% else %}
-            мест
-            {% endif %}
-            </small></div>
-            </td>
-            <td>
+  <div class="day">
+    <div class="date">{{trip_column.date}}</div>
+    <div class="collabs trips">
+      {% for trip in trip_column.trips %}
+      <div class="collab">
+        <div class="time">{{trip.time}}</div>
+        <div class="info">
+          <div class="heading">
+            <div class="route">{{trip.source}}<span> → </span>{{trip.target}}</div>
+            <div class="vehicle">{{trip.vehicle}}</div>
+          </div>
+          <div class="people">
             {% for user in trip.users %}
-                <small>{{ user }}</small><br/>
+            <div class="user">{{ user }}</div>
             {% endfor %}
-            </td>
-            <td>
-            {% if auth %}
-                <form action="{{ request.get_full_path }}" method="post">
-                    {% csrf_token %}
-                    {% if trip.is_owner%}
-<!--                    <div class="input-group mb-3">-->
-<!--                    <button type="submit" class="btn btn-danger" name="delete{{trip.id}}">Удалить поездку</button>-->
-<!--                    </div>-->
-                    {% elif trip.joining and trip.admitted%}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-warning" name="leave{{trip.id}}">Отказаться</button>
-                    </div>
-                    {% elif trip.joining and not trip.admitted%}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-warning" name="leave{{trip.id}}">Не запрашивать участие</button>
-                    </div>
-                    {% elif trip.is_closed %}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-info" name="ask{{trip.id}}">Запросить участие</button>
-                    </div>
-                    {% elif trip.free_places > 0 %}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-primary" name="join{{trip.id}}">Присоединиться</button>
-                    </div>
-                    {% endif %}
-                </form>
+            {% if trip.free_places %}
+            <div class="free-places">Ещё {{ trip.free_places }}
+                {% if trip.free_places == 1 %}
+                место
+                {% elif trip.free_places <= 4 and trip.free_places >= 2 %}
+                места
+                {% else %}
+                мест
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="no-free-places">Мест нет</div>
             {% endif %}
-            {% if trip.joining and trip.admitted %}
-                <form action="/chat/{{trip.id}}" method="get">
-                <button type="submit" class="btn btn-primary">Открыть чат</button>
-                </form>
+          </div>
+        </div>
+        <div class="actions">
+          {% if auth %}
+          <form action="{{ request.get_full_path }}" method="post">
+            {% csrf_token %}
+            {% if trip.is_owner%}
+            <!--<div class="input-group mb-3">-->
+            <!--<button type="submit" class="btn btn-danger" name="delete{{trip.id}}">Удалить поездку</button>-->
+            <!--</div>-->
+            {% elif trip.joining and trip.admitted %}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-warning" name="leave{{trip.id}}">Отказаться</button>
+            </div>
+            {% elif trip.joining and not trip.admitted%}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-warning" name="leave{{trip.id}}">Не запрашивать участие</button>
+            </div>
+            {% elif trip.is_closed %}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-info" name="ask{{trip.id}}">Запросить участие</button>
+            </div>
+            {% elif trip.free_places > 0 %}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-primary" name="join{{trip.id}}">Присоединиться</button>
+            </div>
             {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
-{% else %}
-    <p>No trips are available.</p>
-{% endif %}</div>
+          </form>
+          {% endif %}
+          {% if trip.joining and trip.admitted %}
+          <form action="/chat/{{trip.id}}" method="get">
+            <button type="submit" class="btn btn-primary">Открыть чат</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-collabs">В этот день пока никто не назначил поездок</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p>No trips are available.</p>
+  {% endif %}
+</div>
 {% endfor %}
+</div>
 <script>
   var until_date = "{{until_date}}";
   var user = {{user.id}};

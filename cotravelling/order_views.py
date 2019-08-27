@@ -77,7 +77,7 @@ def build_context(date_from, days, user):
     orders = [build_order(date_from + timedelta(i), user) for i in range(days)]
     context = {'orders': 
                [{'orders' : orders[i], 
-                 'date' : datetime.strftime(date_from + timedelta(i), "%a. %d.%m."),
+                 'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
                 }
                  for i in range(days)],
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
@@ -108,9 +108,9 @@ def findorder(request):
     
     user_agent = get_user_agent(request)
     if user_agent.is_mobile:
-        days = 1
+        days = 3
     else:
-        days = 1
+        days = 3
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user

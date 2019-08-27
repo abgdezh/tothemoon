@@ -1,65 +1,68 @@
+<div class="d-flex" name="calendar_flex">
 {% for order_column in orders %}
-  <div class="p-2">
+<div class="p-2" name="day_column">
   {% if order_column %}
-<table class="table" style="background-color:#DDF0FF">
-    <thead>
-    <tr>
-      <th scope="col-xs-3">{{order_column.date}}</th>
-      <th scope="col-xs-3">Участники</th>
-      <th scope="col-xs-3"></th>
-    </tr>
-    </thead>
-    {% for order in order_column.orders %}
-        <tr>
-            <td>
-            <div>{{order.source}} → {{order.target}}</div>
-            <div><small>{{order.time}}</small></div>
-            </td>
-            <td>
+  <div class="day">
+    <div class="date">{{order_column.date}}</div>
+    <div class="collabs orders">
+      {% for order in order_column.orders %}
+      <div class="collab">
+        <div class="time">{{order.time}}</div>
+        <div class="info">
+          <div class="heading">
+            <div class="route">{{order.source}}<span> → </span>{{order.target}}</div>
+          </div>
+          <div class="people">
             {% for user in order.users %}
-                <small>{{ user }}</small><br/>
+            <div class="user">{{ user }}</div>
             {% endfor %}
-            </td>
-            <td>
-            {% if auth %}
-                <form action="{{ request.get_full_path }}" method="post">
-                    {% csrf_token %}
-                    {% if order.is_owner%}
-<!--                    <div class="input-group mb-3">-->
-<!--                    <button type="submit" class="btn btn-danger" name="delete{{order.id}}">Удалить заказ</button>-->
-<!--                    </div>-->
-                    {% elif order.joining and order.admitted%}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Отказаться</button>
-                    </div>
-                    {% elif order.joining and not order.admitted%}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Не запрашивать участие</button>
-                    </div>
-                    {% elif order.is_closed %}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-info" name="ask{{order.id}}">Запросить участие</button>
-                    </div>
-                    {% else %}
-                    <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-primary" name="join{{order.id}}">Присоединиться</button>
-                    </div>
-                    {% endif %}
-                </form>
+          </div>
+        </div>
+        <div class="actions">
+          {% if auth %}
+          <form action="{{ request.get_full_path }}" method="post">
+            {% csrf_token %}
+            {% if order.is_owner%}
+            <!--<div class="input-group mb-3">-->
+            <!--<button type="submit" class="btn btn-danger" name="delete{{order.id}}">Удалить заказ</button>-->
+            <!--</div>-->
+            {% elif order.joining and order.admitted%}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Отказаться</button>
+            </div>
+            {% elif order.joining and not order.admitted%}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-warning" name="leave{{order.id}}">Не запрашивать участие</button>
+            </div>
+            {% elif order.is_closed %}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-info" name="ask{{order.id}}">Запросить участие</button>
+            </div>
+            {% else %}
+            <div class="input-group mb-3">
+              <button type="submit" class="btn btn-primary" name="join{{order.id}}">Присоединиться</button>
+            </div>
             {% endif %}
-            {% if order.joining and order.admitted %}
-                <form action="/orders_chat/{{order.id}}" method="get">
-                <button type="submit" class="btn btn-primary">Открыть чат</button>
-                </form>
-            {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
-{% else %}
-    <p>No orders are available.</p>
-{% endif %}</div>
+          </form>
+          {% endif %}
+          {% if order.joining and order.admitted %}
+          <form action="/orders_chat/{{order.id}}" method="get">
+            <button type="submit" class="btn btn-primary">Открыть чат</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-collabs">В этот день пока никто ничего не заказал</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p>No orders are available.</p>
+  {% endif %}
+</div>
 {% endfor %}
+</div>
 <script>
   var until_date = "{{until_date}}";
   var user = {{user.id}};
