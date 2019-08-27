@@ -99,7 +99,9 @@ div[class="break"] {
   font-weight: bold;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
-  font-size: 22px;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
 }
 .collab {
   display: flex;
@@ -111,6 +113,9 @@ div[class="break"] {
   padding: 0 3px;
   float: left;
   margin-right: 10px;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
 }
 .collabs.trips .time {
   background: #b4fffc;
@@ -120,6 +125,9 @@ div[class="break"] {
 }
 .collab .info {
   flex: 1;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
 }
 .collab .route {
   font-weight: bold;
@@ -130,7 +138,11 @@ div[class="break"] {
 }
 .collab .vehicle {
   display: inline;
+  {% if request.user_agent.is_mobile %}
+  font-size: 0.75em;
+  {% else %}
   font-size: 12px;
+  {% endif %}
   border: 1px solid #ddd;
   padding: 0 3px;
   color: #777;
@@ -142,6 +154,9 @@ div[class="break"] {
 .no-collabs {
   color: #777;
   padding: 10px 0;
+  {% if request.user_agent.is_mobile %}
+  font-size: 2em;
+  {% endif %}
 }
 .collab .free-places {
   color: #777;
