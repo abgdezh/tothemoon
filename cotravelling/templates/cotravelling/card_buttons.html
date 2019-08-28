@@ -1,0 +1,57 @@
+{% if trip.is_owner %} <!-- Current user is owner of the trip -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-6" style="padding-left: 0; padding-right: 8px;">
+            <button class="btn_action action_open_chat">открыть чат</button>
+        </div>
+        <div class="col-12 col-lg-6" style="padding-right: 0; padding-left: 8px;">
+            <button type="submit" class="btn_action action_refuse" name="delete{{trip.id}}">удалить поездку</button>
+        </div>
+    </div>
+</div>
+{% elif trip.joining and trip.admitted %} <!-- Current user has joined the trip and was admited -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-6" style="padding-left: 0; padding-right: 8px;">
+            <button class="btn_action action_open_chat">открыть чат</button>
+        </div>
+        <div class="col-12 col-lg-6" style="padding-right: 0; padding-left: 8px;">
+            <button type="submit" class="btn_action action_refuse">отказаться</button>
+        </div>
+    </div>
+</div>
+{% elif trip.joining and not trip.admitted %} <!-- Current user has asked for admition -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn_action action_refuse">отказаться</button>
+            <span class="under_btn_info">Заявка отправлена</h6>
+        </div>
+    </div>
+</div>
+{% elif trip.is_closed %} <!-- This trip is private, current user can ask to take part -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn_action action_open_chat">запросить участие</button>
+            <span class="under_btn_info">Частная поездка</h6>
+        </div>
+    </div>
+</div>
+{% elif trip.free_places > 0 %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn_action action_open_chat">присоединиться</button>
+            <span class="under_btn_info">{{ trip.free_places }} 
+                    {% if trip.free_places == 1 %}
+                    свободное место
+                    {% elif trip.free_places <= 4 and trip.free_places >= 2 %}
+                    свободных места
+                    {% else %}
+                    свободных мест
+                    {% endif %}</span>
+        </div>
+    </div>
+</div>
+{% endif %}

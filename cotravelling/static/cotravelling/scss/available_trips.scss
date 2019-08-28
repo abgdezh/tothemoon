@@ -96,6 +96,7 @@ select:focus {
     width: 100%;
     border-radius: 5px;
     box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.25);
+    margin-top: 16px;
 
     .trip_container {
         margin-top: 16px;
@@ -162,6 +163,31 @@ select:focus {
         font-size: 1rem;
         margin-top: 16px;
     }
+
+    .card_buttons {
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+}
+
+.action_join {
+    margin-top: 8px !important;
+    background-color: #1E90FF;
+}
+
+.action_open_chat {
+    margin-top: 8px !important;
+    background-color: #1E90FF;
+}
+
+.action_refuse {
+    margin-top: 8px !important;
+    background-color: #FF6348;
+}
+
+.under_btn_info {
+    margin-top: 8px;
+    font-size: 0.9rem;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -209,6 +235,7 @@ select:focus {
             justify-content: space-between;
             padding-left: 0;
             padding-right: 0;
+            margin-top: 8px;
 
             * {
                 display: inline-block !important;
@@ -235,6 +262,7 @@ select:focus {
             flex-direction: row !important;
             flex-wrap: nowrap;
             justify-content: space-between;
+            margin-top: 8px;
 
             .trip_vehicle {
                 margin-top: 0 !important;
@@ -244,6 +272,21 @@ select:focus {
                 margin-left: 0;
             }
         }
+
+        .participants_container {
+            padding-top: 0;
+        }
+
+        .card_buttons {
+            [class*='col-'] {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }
+    }
+
+    .action_refuse, .action_open_chat {
+        padding: 0;
     }
 }
 
@@ -292,6 +335,7 @@ select:focus {
             justify-content: space-between;
             padding-left: 0;
             padding-right: 0;
+            margin-top: 8px;
 
             * {
                 display: inline-block !important;
@@ -318,6 +362,7 @@ select:focus {
             flex-direction: row !important;
             flex-wrap: nowrap;
             justify-content: space-between;
+            margin-top: 8px;
 
             .trip_vehicle {
                 margin-top: 0 !important;
@@ -327,6 +372,21 @@ select:focus {
                 margin-left: 0;
             }
         }
+
+        .participants_container {
+            padding-top: 0;
+        }
+
+        .card_buttons {
+            [class*='col-'] {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }        
+    }
+
+    .action_refuse, .action_open_chat {
+        padding: 0;
     }
 }
 
@@ -362,4 +422,13 @@ select:focus {
         padding-right: 0px;
     }
 
+    .action_open_chat, .action_refuse {
+        padding: 10px 12px;
+    }
+
+    .card_default {
+        .btn_action, .btn_action:focus {
+            font-size: 0.8rem;
+        }
+    }
 }

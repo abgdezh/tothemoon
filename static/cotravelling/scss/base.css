@@ -6926,12 +6926,13 @@ body {
   background-color: #F3F3F3; }
 
 .btn_action {
-  background-color: #E2A26A;
+  background-color: #1E90FF;
   border-radius: 40px;
   padding: 15px 40px 15px 40px;
   cursor: pointer; }
 
 footer {
+  flex-shrink: 0;
   background-color: #71D578;
   color: white; }
 
@@ -6939,6 +6940,8 @@ footer {
   html {
     font-size: 1rem; }
   .navbar {
+    position: fixed;
+    top: 0;
     height: 56px;
     border-bottom: 1px solid #0D4A27; }
     .navbar img {
@@ -6953,6 +6956,8 @@ footer {
   html {
     font-size: 1rem; }
   .navbar {
+    position: fixed;
+    top: 0;
     height: 56px;
     border-bottom: 1px solid #0D4A27; }
     .navbar img {
