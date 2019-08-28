@@ -77,7 +77,8 @@ select:focus {
 .card_default {
   width: 100%;
   border-radius: 5px;
-  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25); }
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  margin-top: 16px; }
   .card_default .trip_container {
     margin-top: 16px;
     margin-bottom: 16px; }
@@ -119,6 +120,25 @@ select:focus {
     width: 100%;
     font-size: 1rem;
     margin-top: 16px; }
+  .card_default .card_buttons {
+    margin-top: 8px;
+    margin-bottom: 0; }
+
+.action_join {
+  margin-top: 8px !important;
+  background-color: #1E90FF; }
+
+.action_open_chat {
+  margin-top: 8px !important;
+  background-color: #1E90FF; }
+
+.action_refuse {
+  margin-top: 8px !important;
+  background-color: #FF6348; }
+
+.under_btn_info {
+  margin-top: 8px;
+  font-size: 0.9rem; }
 
 @media (min-width: 768px) and (max-width: 991px) {
   #from {
@@ -147,7 +167,8 @@ select:focus {
       flex-wrap: nowrap;
       justify-content: space-between;
       padding-left: 0;
-      padding-right: 0; }
+      padding-right: 0;
+      margin-top: 8px; }
       .mobile_content .path * {
         display: inline-block !important; }
       .mobile_content .path .start_circle_point {
@@ -161,11 +182,19 @@ select:focus {
     .mobile_content .info_container {
       flex-direction: row !important;
       flex-wrap: nowrap;
-      justify-content: space-between; }
+      justify-content: space-between;
+      margin-top: 8px; }
       .mobile_content .info_container .trip_vehicle {
         margin-top: 0 !important; }
       .mobile_content .info_container .info_block {
-        margin-left: 0; } }
+        margin-left: 0; }
+    .mobile_content .participants_container {
+      padding-top: 0; }
+    .mobile_content .card_buttons [class*='col-'] {
+      padding-left: 0 !important;
+      padding-right: 0 !important; }
+  .action_refuse, .action_open_chat {
+    padding: 0; } }
 
 @media (max-width: 768px) {
   #from {
@@ -194,7 +223,8 @@ select:focus {
       flex-wrap: nowrap;
       justify-content: space-between;
       padding-left: 0;
-      padding-right: 0; }
+      padding-right: 0;
+      margin-top: 8px; }
       .mobile_content .path * {
         display: inline-block !important; }
       .mobile_content .path .start_circle_point {
@@ -208,11 +238,19 @@ select:focus {
     .mobile_content .info_container {
       flex-direction: row !important;
       flex-wrap: nowrap;
-      justify-content: space-between; }
+      justify-content: space-between;
+      margin-top: 8px; }
       .mobile_content .info_container .trip_vehicle {
         margin-top: 0 !important; }
       .mobile_content .info_container .info_block {
-        margin-left: 0; } }
+        margin-left: 0; }
+    .mobile_content .participants_container {
+      padding-top: 0; }
+    .mobile_content .card_buttons [class*='col-'] {
+      padding-left: 0 !important;
+      padding-right: 0 !important; }
+  .action_refuse, .action_open_chat {
+    padding: 0; } }
 
 @media (min-width: 992px) {
   #from {
@@ -230,6 +268,10 @@ select:focus {
       margin-bottom: 8px; }
   .info_container {
     padding-left: 0px;
-    padding-right: 0px; } }
+    padding-right: 0px; }
+  .action_open_chat, .action_refuse {
+    padding: 10px 12px; }
+  .card_default .btn_action, .card_default .btn_action:focus {
+    font-size: 0.8rem; } }
 
 /*# sourceMappingURL=available_trips.css.map */
