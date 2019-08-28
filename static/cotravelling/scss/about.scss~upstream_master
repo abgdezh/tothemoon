@@ -53,4 +53,5 @@ h2 {
 .card_default:hover {
     transform: scale(1.01, 1.01);
     box-shadow: 3px 3px 10px 5px rgba(0,0,0,0.20);
-  }
+}
+

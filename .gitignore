@@ -1,5 +1,8 @@
 .vscode
 tothemoon/settings.py
+cotravelling/__pycache__
+cotravelling/migrations
+tothemoon/__pycache__
 log
 errlog
 *__pycache__*
