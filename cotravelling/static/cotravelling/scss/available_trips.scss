@@ -1,0 +1,365 @@
+@import "../bootstrap-4.2.1/scss/functions";
+@import "../bootstrap-4.2.1/scss/variables";
+@import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
+
+.input_box {
+    display: flex;
+    align-items: center;
+    min-height: 70px;
+    // padding: 10px 10px 10px 10px;
+    background-color: #fafafa;
+    // margin: 10px 3px 10px 3px;
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.25);
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-right: 1px;
+      padding-left: 1px;
+    }
+}
+
+.input-group-text, select {
+    padding: 0 0 0 16px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    color: #4F4F4F;
+    font-size: 1.2rem;
+}
+
+select:focus {
+    outline: none !important;
+}
+
+#people_count {
+    padding: 0 0 0 16px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    color: #4F4F4F;
+    font-size: 1.2rem;
+}
+
+.datetimepicker-input, .datetimepicker-input:focus {
+    width: 70%;
+    padding: 0 0 0 16px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    color: #4F4F4F;
+    font-size: 1.2rem;
+}
+
+.btn_action, .btn_action:focus {
+    width: 100%;
+    min-height: 40px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.25);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.circle_point {
+    width: 12px;
+    height: 12px;
+}
+
+.rect_path {
+    width: 4px;
+    height: 100%;
+    background-color: #8395A7;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.current_date input, .current_date input:focus {
+    max-width: 80px;
+    font-size: 1.4rem;
+    padding-left: 0;
+    vertical-align: center;
+}
+
+.card_default {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.25);
+
+    .trip_container {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .card_title {
+        margin-left: 8px;
+        margin-top: 8px;
+    }
+
+    .card_divider {
+        width: 100%;
+        height: 1px;
+        background-color: #000;
+    }
+
+    .field_hint {
+        font-size: 0.6rem;
+        color: #BDBDBD;
+        margin-bottom: -4px;
+        display: block;
+    }
+
+    .from_to_block h6 {
+        margin-bottom: 0;
+        white-space: nowrap;
+        font-size: 1.2rem;
+    }
+
+    span {
+        display: block;
+    }
+
+    .info_block {
+        margin-left: 6px;
+        font-size: 0.9rem;
+        color: #828282;
+
+        span {
+            display: block;
+            white-space: nowrap;
+        }
+    }
+
+    .divider {
+        width: 1px;
+        background-color: #8395A7;
+        margin-right: 8px;
+    }
+
+    .participants {
+        font-size: 0.9rem;
+
+        span {
+            display: inline;
+            white-space: nowrap;
+        }
+
+    }
+
+    .btn_action {
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #from {
+        border-radius: 5px 0 0 0; 
+    }
+
+    #to {
+        border-radius: 0 5px 0 0; 
+    }
+
+    #date {
+        border-radius: 0 0 5px 0;
+    }
+
+    #vehicle {
+        border-radius: 0 0 0 5px;
+    }
+
+    .mobile_content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .card_default {
+            max-width: 500px;
+        }
+
+        .from_to_block {
+            display: inline-block !important;
+            padding-right: 15px;
+
+            div {
+                display: inline-block !important;
+            }
+
+            .to_block {
+                float:right;
+            }
+        }
+
+        .path {
+            flex-direction: row !important;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding-left: 0;
+            padding-right: 0;
+
+            * {
+                display: inline-block !important;
+
+            }
+
+            .start_circle_point {
+                margin-left: 30px;
+            }
+
+            .end_circle_point {
+                margin-right: 30px;
+            }
+
+            .rect_path {
+                flex-grow: 1;
+                width: 70%;
+                height: 4px;
+            }
+
+        }
+
+        .info_container {
+            flex-direction: row !important;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+
+            .trip_vehicle {
+                margin-top: 0 !important;
+            }
+
+            .info_block {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #from {
+        border-radius: 5px 5px 0 0; 
+    }
+
+    #to {
+        border-radius: 0; 
+    }
+
+    #date {
+        border-radius: 0 0 5px 5px;
+    }
+
+    #vehicle {
+        border-radius: 0;
+    }
+
+    .mobile_content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .card_default {
+            max-width: 500px;
+        }
+
+        .from_to_block {
+            display: inline-block !important;
+            padding-right: 15px;
+
+            div {
+                display: inline-block !important;
+            }
+
+            .to_block {
+                float:right;
+            }
+        }
+
+        .path {
+            flex-direction: row !important;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding-left: 0;
+            padding-right: 0;
+
+            * {
+                display: inline-block !important;
+
+            }
+
+            .start_circle_point {
+                margin-left: 30px;
+            }
+
+            .end_circle_point {
+                margin-right: 30px;
+            }
+
+            .rect_path {
+                flex-grow: 1;
+                width: 70%;
+                height: 4px;
+            }
+
+        }
+
+        .info_container {
+            flex-direction: row !important;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+
+            .trip_vehicle {
+                margin-top: 0 !important;
+            }
+
+            .info_block {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    
+    #from {
+        border-radius: 5px 0 0 5px;
+    }
+
+    #date {
+        border-radius: 0 5px 5px 0;
+    }
+
+    .from_to_block {
+        padding-right: 15px;
+    }
+
+    .path {
+        padding-left: 0px;
+        padding-right: 0px;
+
+        .start_circle_point {
+            margin-top: 8px;
+        }
+
+        .end_circle_point {
+            margin-bottom: 8px;
+        }
+    }
+
+    .info_container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+}
