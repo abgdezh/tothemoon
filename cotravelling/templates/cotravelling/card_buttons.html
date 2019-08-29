@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-{% elif trip.is_closed %} <!-- This trip is private, current user can ask to take part -->
+{% elif trip.is_closed and trip.free_places > 0 %} <!-- This trip is private, current user can ask to take part -->
 <div class="container">
     <div class="row justify-content-center card_buttons">
         <div class="col-12 col-lg-8">
@@ -58,4 +58,6 @@
         </div>
     </div>
 </div>
+{% else %}
+   <h6>Свободных мест нет</h6>
 {% endif %}
