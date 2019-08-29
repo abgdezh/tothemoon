@@ -78,6 +78,7 @@ def build_context(date_from, days, user):
     context = {'trips': 
                [{'trips' : trips[i], 
                  'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
+                 'iteration' : i,
                 }
                  for i in range(days)],
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),

@@ -39,7 +39,6 @@
             {% if not auth %}
             <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
-                <button type="button" class="btn btn-primary">регистрация</button>
             </div>
             
             <a class="nav-right nav-link d-block d-lg-none" href="/login/vk-oauth2/?next=/findtrip">
@@ -48,7 +47,7 @@
 
             {% else %}
             <div class="navbar-right ml-auto mr-1">
-                <a class="nav-link" href="#">Антон</a>
+                <a class="nav-link" href="#">{{user.first_name}}</a>
             </div>
 
             {% endif %}
