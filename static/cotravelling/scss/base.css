@@ -6940,8 +6940,6 @@ footer {
   html {
     font-size: 1rem; }
   .navbar {
-    position: fixed;
-    top: 0;
     height: 56px;
     border-bottom: 1px solid #0D4A27; }
     .navbar img {
@@ -6956,8 +6954,6 @@ footer {
   html {
     font-size: 1rem; }
   .navbar {
-    position: fixed;
-    top: 0;
     height: 56px;
     border-bottom: 1px solid #0D4A27; }
     .navbar img {
