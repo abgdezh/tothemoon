@@ -283,8 +283,6 @@
                                         {% csrf_token %}
                                     </form>
                                     {% include "cotravelling/card_buttons.html" %}
-                                    {% else %}
-                                        <button class="btn_action">присоединиться</button>
                                     {% endif %}
                                 {% else %}
                                     <h6 style="margin-top: 8px;">Свободных мест нет</h6>
@@ -361,7 +359,7 @@
                 </div>
                 {% empty %}
                 <div class="card card_default card_empty text-center">
-                    <h4>Поездок незапланированно</h4>
+                    <h4>Поездок не запланировано</h4>
                 </div>
                 {% endfor %}
                 <script>
@@ -370,7 +368,7 @@
                 </script>
             {% else %}
                 <div class="card card_default text-center">
-                    <h4>Поездок незапланированно</h4>
+                    <h4>Поездок не запланировано</h4>
                 </div>
             {% endif %} 
         </div>

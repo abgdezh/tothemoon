@@ -114,7 +114,7 @@ def findtrip(request):
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
-    return render(request, 'cotravelling/findtrip.html', context)
+    return render(request, 'cotravelling/available_trips.html', context)
     
 
 def load_trips(request, **kwargs):
