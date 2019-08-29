@@ -123,7 +123,6 @@ select:focus {
 
     .from_to_block h6 {
         margin-bottom: 0;
-        white-space: nowrap;
         font-size: 1.2rem;
     }
 
@@ -190,6 +189,11 @@ select:focus {
     font-size: 0.9rem;
 }
 
+form {
+    margin: 0;
+    padding: 0;
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
     #from {
         border-radius: 5px 0 0 0; 
@@ -222,10 +226,12 @@ select:focus {
 
             div {
                 display: inline-block !important;
+                width: 50%;
             }
 
             .to_block {
-                float:right;
+                float: right;
+                text-align: right;
             }
         }
 
@@ -322,10 +328,12 @@ select:focus {
 
             div {
                 display: inline-block !important;
+                width: 50%;
             }
 
             .to_block {
-                float:right;
+                float: right;
+                text-align: right;
             }
         }
 
@@ -401,7 +409,7 @@ select:focus {
     }
 
     .from_to_block {
-        padding-right: 15px;
+        padding-right: 0;
     }
 
     .path {

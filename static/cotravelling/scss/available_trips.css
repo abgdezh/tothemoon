@@ -96,7 +96,6 @@ select:focus {
     display: block; }
   .card_default .from_to_block h6 {
     margin-bottom: 0;
-    white-space: nowrap;
     font-size: 1.2rem; }
   .card_default span {
     display: block; }
@@ -140,6 +139,10 @@ select:focus {
   margin-top: 8px;
   font-size: 0.9rem; }
 
+form {
+  margin: 0;
+  padding: 0; }
+
 @media (min-width: 768px) and (max-width: 991px) {
   #from {
     border-radius: 5px 0 0 0; }
@@ -159,9 +162,11 @@ select:focus {
       display: inline-block !important;
       padding-right: 15px; }
       .mobile_content .from_to_block div {
-        display: inline-block !important; }
+        display: inline-block !important;
+        width: 50%; }
       .mobile_content .from_to_block .to_block {
-        float: right; }
+        float: right;
+        text-align: right; }
     .mobile_content .path {
       flex-direction: row !important;
       flex-wrap: nowrap;
@@ -215,9 +220,11 @@ select:focus {
       display: inline-block !important;
       padding-right: 15px; }
       .mobile_content .from_to_block div {
-        display: inline-block !important; }
+        display: inline-block !important;
+        width: 50%; }
       .mobile_content .from_to_block .to_block {
-        float: right; }
+        float: right;
+        text-align: right; }
     .mobile_content .path {
       flex-direction: row !important;
       flex-wrap: nowrap;
@@ -258,7 +265,7 @@ select:focus {
   #date {
     border-radius: 0 5px 5px 0; }
   .from_to_block {
-    padding-right: 15px; }
+    padding-right: 0; }
   .path {
     padding-left: 0px;
     padding-right: 0px; }

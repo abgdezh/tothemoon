@@ -131,7 +131,7 @@
         </div>
         <div class="row mt-2 justify-content-center">
             <div class="col-lg-3 col-md-6 col-sm-12 col-12 text-center">
-                <button type="submit" class="btn_action" name="add_trip" required>Добавить поездку</button>
+                <button type="submit" class="btn_action" name="add_trip" required style="padding: 10px 10px;">Добавить поездку</button>
             </div>
         </div>
     </div>
@@ -213,10 +213,10 @@
                             <div class="col-xl-12 col-lg-12 col-12 d-block">
                                 {% if trip.free_places %}
                                     {% if auth %}
-                                    <form class="card_buttons" action="{{ request.get_full_path }}" method="post">
+                                    <form id="button_form" action="{{ request.get_full_path }}" method="post">
                                         {% csrf_token %}
-                                        {% include "cotravelling/card_buttons.html" %}
                                     </form>
+                                    {% include "cotravelling/card_buttons.html" %}
                                     {% endif %}
                                 {% else %}
                                     <h6 style="margin-top: 8px;">Свободных мест нет</h6>
@@ -279,10 +279,10 @@
                             <div class="col-xl-12 col-lg-12 col-12 d-block">
                                 {% if trip.free_places > 0 %}
                                     {% if auth %}
-                                    <form class="card_buttons" action="{{ request.get_full_path }}" method="post">
+                                    <form id="button_form" action="{{ request.get_full_path }}" method="post">
                                         {% csrf_token %}
-                                        {% include "cotravelling/card_buttons.html" %}
                                     </form>
+                                    {% include "cotravelling/card_buttons.html" %}
                                     {% else %}
                                         <button class="btn_action">присоединиться</button>
                                     {% endif %}
@@ -305,8 +305,8 @@
             {% endif %}
         </div>
         <div class="d-none d-lg-block col-lg-4">
-                {% if trips.0|length > 0 %}
-                {% for trip in trips.0.trips %}
+                {% if trips.2|length > 0 %}
+                {% for trip in trips.2.trips %}
                 <div class="card card_default"> <!-- One crad for one trip -->
                     <div class="container trip_container">
                         <div class="row"> 
@@ -347,10 +347,10 @@
                             <div class="col-xl-12 col-lg-12 col-12 d-block">
                                 {% if trip.free_places %}
                                     {% if auth %}
-                                    <form class="card_buttons" action="{{ request.get_full_path }}" method="post">
+                                    <form id="button_form" action="{{ request.get_full_path }}" method="post">
                                         {% csrf_token %}
-                                        {% include "cotravelling/card_buttons.html" %}
                                     </form>
+                                    {% include "cotravelling/card_buttons.html" %}
                                     {% endif %}
                                 {% else %}
                                     <h6 style="margin-top: 8px;">Свободных мест нет</h6>
@@ -364,6 +364,10 @@
                     <h4>Поездок незапланированно</h4>
                 </div>
                 {% endfor %}
+                <script>
+                    var until_date = "{{until_date}}";
+                    var user = {{ user.id }};
+                </script>
             {% else %}
                 <div class="card card_default text-center">
                     <h4>Поездок незапланированно</h4>
@@ -372,5 +376,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    function load() {
+        console.log("load");
+        $.ajax({
+            url: "/load_trips/" + until_date + "/" + user,
+            success: function(result) {
+                if (result["date"] == undefined) {
+                    console.log(result);
+                }
+                console.log(result["date"] + " " + until_date);
+                if (result["date"] == window.until_date) {
+                    $("#days_list").append(result["page"]);
+                    window.until_date = result["new_date"];
+                }
+            },
+        });
+        
+    }
+
+</script>
 
 {% endblock content %}
