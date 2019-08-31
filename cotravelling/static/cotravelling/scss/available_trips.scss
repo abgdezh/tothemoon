@@ -83,6 +83,7 @@ select:focus {
     background-color: #8395A7;
     margin-top: -2px;
     margin-bottom: -2px;
+    flex: 1;
 }
 
 .current_date input, .current_date input:focus {
@@ -124,6 +125,8 @@ select:focus {
     .from_to_block h6 {
         margin-bottom: 0;
         font-size: 1.2rem;
+        word-wrap: break-word;
+        -ms-word-wrap: break-word;
     }
 
     span {
@@ -138,6 +141,8 @@ select:focus {
         span {
             display: block;
             line-height: 1.1;
+            word-wrap: break-word;
+            -ms-word-wrap: break-word;
         }
     }
 
@@ -152,7 +157,8 @@ select:focus {
 
         span {
             display: inline;
-            white-space: nowrap;
+            word-wrap: break-word;
+            -ms-word-wrap: break-word;
         }
 
     }
