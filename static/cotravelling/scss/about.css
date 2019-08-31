@@ -2,6 +2,13 @@ h2 {
   color: #4F4F4F;
   font-weight: bold; }
 
+.list_item {
+  margin-top: 16px; }
+  .list_item span {
+    align-self: center;
+    margin-left: 28px;
+    color: black; }
+
 .main_container {
   margin-top: 20px; }
 
@@ -48,6 +55,18 @@ h2 {
   transform: scale(1.01, 1.01);
   box-shadow: 3px 3px 10px 5px rgba(0, 0, 0, 0.2); }
 
+.soon {
+  flex-direction: row;
+  width: 120%; }
+  .soon h2 {
+    order: 1; }
+  .soon img {
+    order: 2;
+    margin-left: 8px; }
+
+.btn_action, .btn_action:focus {
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25); }
+
 @media (min-width: 576px) and (max-width: 991px) {
   .long_name {
     font-size: 1.7rem;
@@ -66,7 +85,14 @@ h2 {
       letter-spacing: -1px; }
     .main_container .subtext {
       text-align: center;
-      display: block; } }
+      display: block; }
+  .soon {
+    flex-direction: column;
+    width: 100%; }
+    .soon h2 {
+      order: 2; }
+    .soon img {
+      order: 1; } }
 
 @media (max-width: 575px) {
   .main_img {
@@ -88,6 +114,13 @@ h2 {
       letter-spacing: -1px; }
     .main_container .subtext {
       text-align: center;
-      display: block; } }
+      display: block; }
+  .soon {
+    flex-direction: column;
+    width: 100%; }
+    .soon h2 {
+      order: 2; }
+    .soon img {
+      order: 1; } }
 
 /*# sourceMappingURL=about.css.map */

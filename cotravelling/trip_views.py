@@ -78,6 +78,7 @@ def build_context(date_from, days, user):
     context = {'trips': 
                [{'trips' : trips[i], 
                  'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
+                 'iteration' : i,
                 }
                  for i in range(days)],
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
@@ -114,7 +115,7 @@ def findtrip(request):
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
-    return render(request, 'cotravelling/findtrip.html', context)
+    return render(request, 'cotravelling/available_trips.html', context)
     
 
 def load_trips(request, **kwargs):

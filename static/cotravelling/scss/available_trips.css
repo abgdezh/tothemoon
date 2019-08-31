@@ -105,7 +105,7 @@ select:focus {
     color: #828282; }
     .card_default .info_block span {
       display: block;
-      white-space: nowrap; }
+      line-height: 1.1; }
   .card_default .divider {
     width: 1px;
     background-color: #8395A7;
@@ -122,6 +122,8 @@ select:focus {
   .card_default .card_buttons {
     margin-top: 8px;
     margin-bottom: 0; }
+  .card_default .trip_vehicle {
+    margin-bottom: 4px; }
 
 .action_join {
   margin-top: 8px !important;
@@ -142,6 +144,9 @@ select:focus {
 form {
   margin: 0;
   padding: 0; }
+
+.days_control span {
+  cursor: pointer; }
 
 @media (min-width: 768px) and (max-width: 991px) {
   #from {
@@ -194,7 +199,7 @@ form {
       .mobile_content .info_container .info_block {
         margin-left: 0; }
     .mobile_content .participants_container {
-      padding-top: 0; }
+      padding-top: 8px; }
     .mobile_content .card_buttons [class*='col-'] {
       padding-left: 0 !important;
       padding-right: 0 !important; }
@@ -252,12 +257,14 @@ form {
       .mobile_content .info_container .info_block {
         margin-left: 0; }
     .mobile_content .participants_container {
-      padding-top: 0; }
+      padding-top: 8px; }
     .mobile_content .card_buttons [class*='col-'] {
       padding-left: 0 !important;
       padding-right: 0 !important; }
   .action_refuse, .action_open_chat {
-    padding: 0; } }
+    padding: 0; }
+  .day_control span {
+    font-size: 0.9rem; } }
 
 @media (min-width: 992px) {
   #from {
@@ -279,6 +286,8 @@ form {
   .action_open_chat, .action_refuse {
     padding: 10px 12px; }
   .card_default .btn_action, .card_default .btn_action:focus {
-    font-size: 0.8rem; } }
+    font-size: 0.8rem; }
+  .trip_vehicle span {
+    margin-top: 16px; } }
 
 /*# sourceMappingURL=available_trips.css.map */
