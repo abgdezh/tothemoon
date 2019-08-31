@@ -36,7 +36,7 @@
             <a class="nav-link d-block d-lg-none" href="/findtrip" style="padding-left: 0;">
                 <img class="img-responsive fit-image" src="../../static/cotravelling/img/search_icon.svg" alt="Доступные поездки"/>
             </a>
-            {% if not auth %}
+            {% if not request.user.is_authenticated %}
             <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
             </div>
