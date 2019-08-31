@@ -66,7 +66,8 @@ select:focus {
   height: 100%;
   background-color: #8395A7;
   margin-top: -2px;
-  margin-bottom: -2px; }
+  margin-bottom: -2px;
+  flex: 1; }
 
 .current_date input, .current_date input:focus {
   max-width: 80px;
@@ -96,7 +97,9 @@ select:focus {
     display: block; }
   .card_default .from_to_block h6 {
     margin-bottom: 0;
-    font-size: 1.2rem; }
+    font-size: 1.2rem;
+    word-wrap: break-word;
+    -ms-word-wrap: break-word; }
   .card_default span {
     display: block; }
   .card_default .info_block {
@@ -105,7 +108,9 @@ select:focus {
     color: #828282; }
     .card_default .info_block span {
       display: block;
-      line-height: 1.1; }
+      line-height: 1.1;
+      word-wrap: break-word;
+      -ms-word-wrap: break-word; }
   .card_default .divider {
     width: 1px;
     background-color: #8395A7;
@@ -114,7 +119,8 @@ select:focus {
     font-size: 0.9rem; }
     .card_default .participants span {
       display: inline;
-      white-space: nowrap; }
+      word-wrap: break-word;
+      -ms-word-wrap: break-word; }
   .card_default .btn_action {
     width: 100%;
     font-size: 1rem;
