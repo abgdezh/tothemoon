@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['10.55.131.233', '127.0.0.1', 'shareandsave.ru', '84.201.167.9']
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
