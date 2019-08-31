@@ -29,24 +29,24 @@
         {% endblock css %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
-            <a href="/" class="navbar-brand">ToTheMoon</a>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="/" class="navbar-brand">ShareAndSave</a>
             <a class="nav-link d-none d-lg-block" href="/">О нас <span class="sr-only">(current)</span></a>
             <a class="nav-link d-none d-lg-block" href="/findtrip">Доступные поездки</a>
-            <a class="nav-link d-block d-lg-none" href="/findtrip">
-                <img class="img-responsive fit-image" src="../../static/cotravelling/img/search_icon.png" alt="Доступные поездки"/>
+            <a class="nav-link d-block d-lg-none" href="/findtrip" style="padding-left: 0;">
+                <img class="img-responsive fit-image" src="../../static/cotravelling/img/search_icon.svg" alt="Доступные поездки"/>
             </a>
             {% if not auth %}
             <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
             </div>
             
-            <a class="nav-right nav-link d-block d-lg-none" href="/login/vk-oauth2/?next=/findtrip">
-                <img src="../../static/cotravelling/img/log_in_icon.png" alt="Войти" />
+            <a class="nav-right nav-link d-block d-lg-none" href="/login/vk-oauth2/?next=/findtrip" style="padding-right: 0;">
+                <img src="../../static/cotravelling/img/profile_icon.svg" alt="Войти"/>
             </a>
 
             {% else %}
-            <div class="navbar-right ml-auto mr-1">
+            <div class="navbar-right ml-auto mr-1 user_name">
                 <a class="nav-link" href="#">{{user.first_name}}</a>
             </div>
 

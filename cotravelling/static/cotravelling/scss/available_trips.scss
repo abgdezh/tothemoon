@@ -137,7 +137,7 @@ select:focus {
 
         span {
             display: block;
-            white-space: nowrap;
+            line-height: 1.1;
         }
     }
 
@@ -167,6 +167,10 @@ select:focus {
         margin-top: 8px;
         margin-bottom: 0;
     }
+
+    .trip_vehicle {
+        margin-bottom: 4px;
+    }
 }
 
 .action_join {
@@ -192,6 +196,10 @@ select:focus {
 form {
     margin: 0;
     padding: 0;
+}
+
+.days_control span {
+    cursor: pointer;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -280,7 +288,7 @@ form {
         }
 
         .participants_container {
-            padding-top: 0;
+            padding-top: 8px;
         }
 
         .card_buttons {
@@ -382,7 +390,7 @@ form {
         }
 
         .participants_container {
-            padding-top: 0;
+            padding-top: 8px;
         }
 
         .card_buttons {
@@ -395,6 +403,10 @@ form {
 
     .action_refuse, .action_open_chat {
         padding: 0;
+    }
+
+    .day_control span {
+        font-size: 0.9rem;
     }
 }
 
@@ -438,5 +450,9 @@ form {
         .btn_action, .btn_action:focus {
             font-size: 0.8rem;
         }
+    }
+
+    .trip_vehicle span {
+        margin-top: 16px;
     }
 }

@@ -1,5 +1,5 @@
 $theme-colors: (
-  "primary": #0D4A27,
+  "primary": #1E90FF,
   "secondary": #8395A7
 );
 
@@ -9,6 +9,7 @@ $theme-colors: (
 @import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
 
 body {
+    position: relative;
     font-family: 'Fira Sans', sans-serif;
     background-color: #F3F3F3;
 }
@@ -22,8 +23,12 @@ body {
 
 footer {
     flex-shrink: 0;
-    background-color: #71D578;
+    width: 100%;
+    max-height: 200px;
+    background-color: #1E90FF;
     color: white;
+    position: absolute;
+    bottom: -220px;
 }
 
 @media (min-width: 576px) and (max-width: 991px) {
@@ -31,12 +36,21 @@ footer {
         font-size: 1rem;
     }
 
+    body {
+        padding-top: 56px;
+    }
+
     .navbar {
+        background-color: #F3F3F3;
+        position: fixed;
+        width: 100%;
+        top: 0%;
         height: 56px;
-        border-bottom: 1px solid #0D4A27;
+        border-bottom: 1px solid #8395A7;
+        z-index: 1030;
 
         img {
-            width: 2rem;
+            width: 1.4rem;
         }
     }
 
@@ -53,12 +67,27 @@ footer {
         font-size: 1rem;
     }
     
+    body {
+        padding-top: 56px;
+    }
+
     .navbar {
+        background-color: #F3F3F3;
+        position: fixed;
+        width: 100%;
+        top: 0%;
         height: 56px;
-        border-bottom: 1px solid #0D4A27;
+        border-bottom: 1px solid #8395A7;
+        z-index: 1030;
 
         img {
-            width: 2rem;
+            width: 1.4rem;
+        }
+
+        .user_name {
+            a {
+                padding-right: 0;
+            }
         }
     }
     
