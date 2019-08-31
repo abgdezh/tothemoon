@@ -1,6 +1,24 @@
+@import "../bootstrap-4.2.1/scss/functions";
+@import "../bootstrap-4.2.1/scss/variables";
+@import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
+
 h2 {
     color: #4F4F4F;
     font-weight: bold;
+}
+
+.list_item {
+    margin-top: 16px;
+
+    span {
+        align-self: center;
+        margin-left: 28px;
+        color: black;
+    }
+}
+
+.main_container {
+    margin-top: 20px;
 }
 
 .subtext {
@@ -35,7 +53,7 @@ h2 {
     color: white;
 }
 
-.main-img_container .btn_action {
+.image_container .btn_action {
     bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0);
@@ -55,3 +73,110 @@ h2 {
     box-shadow: 3px 3px 10px 5px rgba(0,0,0,0.20);
 }
 
+.soon {
+    flex-direction: row;
+    width: 120%;
+
+    h2 {
+        order: 1;
+    }
+
+    img {
+        order: 2;
+        margin-left: 8px;
+    }
+}
+
+.btn_action, .btn_action:focus {
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.25);
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+    .long_name {
+        font-size: 1.7rem;
+        color: #4F4F4F;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+
+    .btn_action {
+        left: 50%;
+        font-size: 15px;
+        color: white;
+        margin-top: 16px;
+    }
+
+    .main_container {
+        margin-top: 16px;
+
+        h2 {
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .subtext {
+            text-align: center;
+            display: block;
+        }
+    }
+
+    .soon {
+        flex-direction: column;
+        width: 100%;
+
+        h2 {
+            order: 2;
+        }
+
+        img {
+            order: 1;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .main_img {
+        margin-top: 20px;
+    }
+    
+    .long_name {
+        font-size: 1.7rem;
+        color: #4F4F4F;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+
+    .btn_action {
+        left: 50%;
+        font-size: 15px;
+        color: white;
+        margin-top: 16px;
+    }
+
+    .main_container {
+        margin-top: 16px;
+
+        h2 {
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .subtext {
+            text-align: center;
+            display: block;
+        }
+    }
+
+    .soon {
+        flex-direction: column;
+        width: 100%;
+
+        h2 {
+            order: 2;
+        }
+
+        img {
+            order: 1;
+        }
+    }
+}

@@ -26,24 +26,23 @@
                         <option>6 общежитие</option>
                         <option>7 общежитие</option>
                         <option>8 общежитие</option>
-                        <option>9 общежитие, любой подъезд</option>
-                        <option>9 общежитие, 1 подъезд</option>
-                        <option>9 общежитие, 2 подъезд</option>
-                        <option>9 общежитие, 3 подъезд</option>
-                        <option>9 общежитие, 4 подъезд</option>
+                        <option>9 общежитие</option>
                         <option>10 общежитие</option>
                         <option>11 общежитие</option>
                         <option>12 общежитие</option>
                         <option>Площадь перед НК</option>
                         <option>КПМ</option>
+                        <option>Выход у ГК</option>
                         <option>Додо пицца</option>
                         <option>Метро Ховрино</option>
                         <option>Метро Алтуфьево</option>
+                        <option>Метро Селигерская</option>
+                        <option>Метро Тимирязевская</option>
                         <option>IKEA</option>
                         <option>Metro</option>
                         <option>Окей</option>
                         <option>Рио</option>
-                        <option>Мираторг</option>
+                        <option>Шереметьево, терминал D</option>
                     </select>  
                 </div>  
             </div>
@@ -58,24 +57,23 @@
                         <option>6 общежитие</option>
                         <option>7 общежитие</option>
                         <option>8 общежитие</option>
-                        <option>9 общежитие, любой подъезд</option>
-                        <option>9 общежитие, 1 подъезд</option>
-                        <option>9 общежитие, 2 подъезд</option>
-                        <option>9 общежитие, 3 подъезд</option>
-                        <option>9 общежитие, 4 подъезд</option>
+                        <option>9 общежитие</option>
                         <option>10 общежитие</option>
                         <option>11 общежитие</option>
                         <option>12 общежитие</option>
                         <option>Площадь перед НК</option>
                         <option>КПМ</option>
+                        <option>Выход у ГК</option>
                         <option>Додо пицца</option>
                         <option>Метро Ховрино</option>
                         <option>Метро Алтуфьево</option>
+                        <option>Метро Селигерская</option>
+                        <option>Метро Тимирязевская</option>
                         <option>IKEA</option>
                         <option>Metro</option>
                         <option>Окей</option>
                         <option>Рио</option>
-                        <option>Мираторг</option>
+                        <option>Шереметьево, терминал D</option>
                     </select>
                 </div>
             </div>
@@ -142,111 +140,53 @@
 <div class="container-fluid trip_lists_container mt-4">
     <div class="row justify-content-between days_control">
         <div class="col-lg-4 col-0 d-none d-lg-block align-self-center">
-            <span>←предыдущие три дня</span>
+            <span id="prev3">←предыдущие три дня</span>
         </div>
         <div class="col-lg-4 col-12 text-center align-self-center">
             <h2 class="d-inline">Доступные поездки</h2>
         </div>
         <div class="col-lg-4 col-12 d-inline-block d-lg-none align-self-center text-center">
             <div class="d-inline-block day_control" style="max-width: 500px; width: 100%; margin-top: 16px;">
-                <span style="float: left;">←предыдущий день</span>
-                <span style="float: right;">следующий день→</span>
+                <span style="float: left;" id="prev1">←предыдущий день</span>
+                <span style="float: right;" id="next1">следующий день→</span>
             </div>
         </div>
         <div class="col-lg-4 col-4 d-none d-lg-block text-right align-self-center">
-            <span>следующие три дня→</span>
+            <span id="next3">следующие три дня→</span>
         </div>
     </div>
-    <div class="row">
-        
-    {% for trip_column_date in trips %}
-        {% if trip_column_date.iteration == 0 %}
-        <div class="mobile_content col-12 col-lg-4">
-        {% else %}
-        <div class="d-none d-lg-block col-lg-4">
-        {% endif %}
-                {% for trip in trip_column_date.trips %}
-                <div class="card card_default"> <!-- One crad for one trip -->
-                    <div class="container trip_container">
-                        <div class="row">
-                            <div class="from_to_block col-xl-4 col-lg-5 d-flex flex-column align-items-start col-12"> <!-- From, to, when, vehicle -->
-                                <div>
-                                    <span class="field_hint">Откуда</span>
-                                    <h6>{{trip.source}}</h6>
-                                </div>
-                                <div class="to_block mt-auto">
-                                    <span class="field_hint">Куда</span>
-                                    <h6>{{trip.target}}</h6>
-                                </div>
-                            </div>
-                            <div class="path col-xl-1 col-lg-1 col-12 d-flex flex-column align-items-center">
-                                <img src="../../static/cotravelling/img/circle.svg" class="circle_point start_circle_point"/>
-                                <div class="rect_path"></div>
-                                <img src="../../static/cotravelling/img/circle.svg" class="circle_point end_circle_point"/>
-                            </div>
-                            <div class="col-xl-3 col-lg-6 d-flex flex-column align-items-start col-12 info_container">
-                                <div class="info_block">
-                                    <span>{{trip.time}}</span>
-                                    <span>{{trip_column_date.date}}</span>
-                                </div>
-                                <div class="info_block trip_vehicle mt-auto">
-                                    <span>{{trip.vehicle}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-12 participants_container"> <!-- Participants -->
-                                <span class="field_hint">Участники</span>
-                                <div class="participants d-flex flex-wrap justify-content-between">
-                                    {% for user in trip.users %}
-                                    <span>{{ user }}</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center text-center">
-                            <div class="col-xl-12 col-lg-12 col-12 d-block">
-                                    {% if auth %}
-                                    <form id="button_form" action="{{ request.get_full_path }}" method="post">
-                                        {% csrf_token %}
-                                    </form>
-                                    {% include "cotravelling/card_buttons.html" %}
-                                    {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="card card_default card_empty text-center">
-                    <h4>Поездок не запланировано</h4>
-                </div>
-                {% endfor %}
-        </div>
-        {% endfor %}
-<!--        -->
+    <div class="row" id="trips_block"> 
+    {% include 'cotravelling/trips_block.html' %}
     </div>
-    <script>
-        var until_date = "{{until_date}}";
-        var user = {{ user.id }};
-    </script>
 </div>
 
 <script>
-    function load() {
-        console.log("load");
+    function load(direction, diff) {
         $.ajax({
-            url: "/load_trips/" + until_date + "/" + user,
+            url: "/load_trips/" + date_from + "/" + user + "/" + direction + "/" + diff,
             success: function(result) {
-                if (result["date"] == undefined) {
-                    console.log(result);
-                }
-                console.log(result["date"] + " " + until_date);
-                if (result["date"] == window.until_date) {
-                    $("#days_list").append(result["page"]);
-                    window.until_date = result["new_date"];
-                }
+                document.getElementById("trips_block").innerHTML = result["page"];
+                date_from = result["date_from"];
             },
         });
         
     }
+    
+    prev3.onclick = function () {
+        load("b", 3);
+    };
+    
+    next3.onclick = function () {
+        load("f", 3);
+    };
+    
+    prev1.onclick = function () {
+        load("b", 1);
+    };
+    
+    next1.onclick = function () {
+        load("f", 1);
+    };
 
 </script>
 

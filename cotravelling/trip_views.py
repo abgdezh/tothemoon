@@ -78,10 +78,11 @@ def build_context(date_from, days, user):
     context = {'trips': 
                [{'trips' : trips[i], 
                  'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
+                 'short_date' : datetime.strftime(date_from + timedelta(i), "%-d %B"),
                  'iteration' : i,
                 }
                  for i in range(days)],
-                'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
+                'date_from' : datetime.strftime(date_from, "%Y-%m-%d"),
                 'auth' : type(user) is int or (user and user.is_authenticated)
               }
     return context
@@ -107,11 +108,7 @@ def findtrip(request):
     date_from = date.today()
     date_from = timezone.make_aware(datetime.combine(date_from, time()))
     
-    user_agent = get_user_agent(request)
-    if user_agent.is_mobile:
-        days = 3
-    else:
-        days = 3
+    days = 3
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
@@ -124,12 +121,10 @@ def load_trips(request, **kwargs):
     date_from = datetime.strptime(kwargs['datetime'], '%Y-%m-%d')
     date_from = timezone.make_aware(datetime.combine(date_from, time()))
     user = kwargs.get("user")
-    days = 7
-    context = build_context(date_from, days, user)
-    print("context")
-    return JsonResponse({"page" : render_to_string('cotravelling/trip.html', context, request=request),
-                         "date" : kwargs['datetime'],
-                         "new_date" : datetime.strftime(date_from + timedelta(days), '%Y-%m-%d')
+    diff = kwargs.get("diff") if kwargs.get("direction") == "f" else -kwargs.get("diff")
+    context = build_context(date_from + timedelta(diff), 3, user)
+    return JsonResponse({"page" : render_to_string('cotravelling/trips_block.html', context, request=request),
+                         "date_from" : datetime.strftime(date_from + timedelta(diff), '%Y-%m-%d')
                          })
 
 
@@ -248,7 +243,7 @@ def load_messages(request, **kwargs):
 
 @login_required(login_url='/')
 def chat(request, **kwargs):
-    context = {"messages" : []}
+    context = {"messages" : [], "footer_off" : True}
     if UserTrip.objects.filter(trip__id=kwargs['chat_id'], user=request.user, admitted=True):
         context["messages"] = Message.objects.filter(trip__id=kwargs['chat_id']).order_by('datetime')
     else:

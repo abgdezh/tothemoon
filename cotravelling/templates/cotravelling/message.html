@@ -8,7 +8,7 @@
         {% if message.author != request.user %}
         {{message.author_info}}:
         {% endif %}
-        <div class="alert alert-primary" role="alert" style="margin-bottom: 0;{% if request.user_agent.is_mobile %} font-size:30px {% endif %}">
+        <div class="alert alert-primary" role="alert" style="margin-bottom: 0;">
             {{message.text}}
         </div>
         <small>{{message.datetime}}</small>

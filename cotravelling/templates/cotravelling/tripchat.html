@@ -1,9 +1,9 @@
-{% include "cotravelling/base.html" %}
+{% include "cotravelling/base_navbar.html" %}
 
 <div style="height:1em;"></div>
 
 {% if forbidden %}
-    <h1>Чтобы увидеть чат, нужно присоединиться к поездке.</h1>
+    <h6>Чтобы увидеть чат, нужно присоединиться к поездке.</h6>
 {% else %}
 
 <div class="w-100 p-3">
@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<div class="fixed-bottom" style="background-color: #eee;height:{% if request.user_agent.is_mobile %}8em{% else %}5em{% endif %};">
+<div class="fixed-bottom" style="background-color: #eee;height:4em;">
     <form action="" autocomplete="off">
         {% csrf_token %}
         <div class="w-100 p-3">
@@ -67,15 +67,14 @@
             url: "/load_messages/" + trip_id + "/" + last_message_id,
             success: function(result) {
                 if (result["new_last_message_id"] == undefined) {
-                    console.log(result);
                 }
-                console.log(result["new_last_message_id"] + " " + last_message_id);
                 if (result["last_message_id"] == window.last_message_id) {
                     $("#messages").append(result["page"]);
                     window.last_message_id = result["new_last_message_id"];
                 }
-                if (result["new_last_message_id"] != result["last_message_id"]) {
-                    window.scrollTo(0,document.body.scrollHeight);
+                if (result["new_last_message_id"] != result["last_message_id"] && 
+                    window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 300) {
+                    window.scrollTo(0, document.body.scrollHeight);
                 }
             },
         });
@@ -83,15 +82,17 @@
     
     $("#send_button").click(function(e) {
         e.preventDefault();
+        msg = document.getElementById("message_text").value;
+        document.getElementById("message_text").value = "";
         $.ajax({
             'type': "POST",
             'url': "/add_message/" + trip_id,
             'data': {
-                'content': document.getElementById("message_text").value,
+                'content': msg,
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
             },
             'success': function(result) {
-                document.getElementById("message_text").value = "";
+                
             }
         });
     });
@@ -103,7 +104,7 @@
     async function update() {
         while (true) {
             load();
-            await sleep(100);
+            await sleep(300);
         }
     }
     
