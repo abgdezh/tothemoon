@@ -8,8 +8,12 @@ $theme-colors: (
 @import "../bootstrap-4.2.1/scss/variables";
 @import "../bootstrap-4.2.1/scss/mixins/_breakpoints";
 
-body {
+html {
     position: relative;
+    min-height: 100%;
+}
+
+body {
     font-family: 'Fira Sans', sans-serif;
     background-color: #F3F3F3;
 }

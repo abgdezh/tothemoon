@@ -10,8 +10,8 @@ from . import trip_views, common_views, order_views
 app_name = 'cotravelling'
 urlpatterns = [
     path('findtrip/', trip_views.findtrip, name='findtrip'),
-    path('load_trips/<str:datetime>/<int:user>', trip_views.load_trips, name='findtrip'),
-    path('load_trips/<str:datetime>/undefined', trip_views.load_trips, name='findtrip'),
+    path('load_trips/<str:datetime>/<int:user>/<str:direction>/<int:diff>', trip_views.load_trips, name='findtrip'),
+    path('load_trips/<str:datetime>/undefined/<str:direction>/<int:diff>', trip_views.load_trips, name='findtrip'),
     path('accept/<int:usertrip>', trip_views.accept, name='accept'),
     path('reject/<int:usertrip>', trip_views.reject, name='reject'),
     
