@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
 {# Load the tag library #}
 {% load bootstrap4 %}
 {# Load the tag library #}
@@ -9,9 +13,6 @@
 
 {% load sass_tags %}
 
-<!DOCTYPE html>
-<html>
-    <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock title %}</title>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -37,24 +38,14 @@
                 <img class="img-responsive fit-image" src="../../static/cotravelling/img/search_icon.svg" alt="Доступные поездки"/>
             </a>
             {% if not request.user.is_authenticated %}
-            <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
+            <div class="navbar-right ml-auto mr-1 d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
             </div>
-            
-            <a class="nav-right nav-link d-block d-lg-none" href="/login/vk-oauth2/?next=/findtrip" style="padding-right: 0;">
-                <img src="../../static/cotravelling/img/profile_icon.svg" alt="Войти"/>
-            </a>
 
             {% else %}
-<!--            <div class="navbar-right ml-auto mr-1 user_name">-->
-<!--                <a class="nav-link" href="#">{{user.first_name}}</a>-->
-<!--            </div>-->
-            <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
+            <div class="navbar-right ml-auto mr-1 d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/logout'">выйти</button>
             </div>
-            <a class="nav-right nav-link d-block d-lg-none" href="/logout" style="padding-right: 0;">
-                <img src="../../static/cotravelling/img/profile_icon.svg" alt="Выйти"/>
-            </a>
 
             {% endif %}
         </nav>
@@ -71,7 +62,7 @@
                         <h6>Связаться с нами</h6>
                     </div>
                     <div class="col text-right">
-                        <h6>Социальные сети</h6>
+                        <a href="https://vk.com/shareandsave" style="color: white;">Группа VK</a>
                     </div>
                 </div>
                 <div class="row mt-3">

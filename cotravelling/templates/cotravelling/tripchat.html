@@ -21,7 +21,7 @@
         <div>
         Поедут: {% for usertrip in participants %}{% if forloop.counter0 != 0 %}, {% endif %}
         {%if usertrip.is_owner %}<strong>{% endif %}
-        {{usertrip.user.first_name}} {{usertrip.user.last_name}}{%if usertrip.is_owner %}</strong> (создатель поездки){% else %}
+        <a href="https://vk.com/{{usertrip.user.username}}">{{usertrip.user.first_name}} {{usertrip.user.last_name}}</a>{%if usertrip.is_owner %}</strong> (создатель поездки){% else %}
         (<a href="/reject/{{usertrip.id}}">{% if request.user.id != usertrip.user_id %}исключить{% else %}отказаться{% endif %}</a>){% endif %}{% endfor %}
         </div>
         {% if requested_participants %}
