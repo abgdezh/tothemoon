@@ -208,6 +208,14 @@ form {
     cursor: pointer;
 }
 
+.placeholder {
+    padding: 16px 15px;
+
+    h4 {
+        margin-bottom: 0;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
     #from {
         border-radius: 5px 0 0 0; 
@@ -295,6 +303,10 @@ form {
 
         .participants_container {
             padding-top: 8px;
+
+            .participants span {
+                margin: 0 4px;
+            }
         }
 
         .card_buttons {
@@ -397,6 +409,11 @@ form {
 
         .participants_container {
             padding-top: 8px;
+
+            .participants span {
+                margin: 0 4px;
+            }
+
         }
 
         .card_buttons {

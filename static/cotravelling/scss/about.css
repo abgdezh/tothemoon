@@ -92,7 +92,9 @@ h2 {
     .soon h2 {
       order: 2; }
     .soon img {
-      order: 1; } }
+      order: 1; }
+  .soon_icon {
+    margin-bottom: 8px; } }
 
 @media (max-width: 575px) {
   .main_img {
