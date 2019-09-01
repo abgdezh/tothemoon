@@ -102,10 +102,13 @@ def handle_post_request(request):
     return HttpResponseRedirect(reverse('cotravelling:findtrip'))
 
 
-def findtrip(request):
+def findtrip(request, **kwargs):
     if request.POST:
         return handle_post_request(request)
-    date_from = date.today()
+    if 'date_from' in kwargs:
+        date_from = datetime.strptime(kwargs['date_from'], '%Y-%m-%d')
+    else:
+        date_from = date.today()
     date_from = timezone.make_aware(datetime.combine(date_from, time()))
     
     days = 3
@@ -129,6 +132,7 @@ def load_trips(request, **kwargs):
 
 
 def add_trip(request):
+    date = ''
     try:
         with transaction.atomic():
             trip = Trip()
@@ -139,27 +143,41 @@ def add_trip(request):
             trip.free_places = request.POST['free_places']
             trip.is_closed = 'is_closed' in request.POST
             trip.save()
+            date = request.POST['date_from']
+            print(date)
             user_trip = UserTrip(user=request.user, trip=trip, is_owner=True, admitted=True)
             user_trip.save()
     except Exception as e:
-        print(e)
-    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
+        print(traceback.print_tb(sys.exc_info()[2]))
+    return HttpResponseRedirect('/findtrip/' + date)
     
+    
+def parse_request(request):
+    query = [s.split() for s in request.POST if s != "csrfmiddlewaretoken"][0]
+    return {
+              "query_type": query[0],
+              "trip_id": int(query[1]), 
+              "date_from": query[2],
+           }
+
 
 def join_trip(request):
+    date = ''
     try:
-        trip_id = [int(s.replace("join", "")) for s in request.POST if s.startswith("join")][0]
+        query = parse_request(request)
+        trip_id = query["trip_id"]
+        date = query["date_from"]
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
             if trip.free_places > 0 and not trip.is_closed:
-                trip.free_places -=1
+                trip.free_places -= 1
                 user_trip = UserTrip(user=request.user, trip=trip, is_owner=False, admitted=True)
                 trip.save()
                 user_trip.save()
             
     except Exception as e:
-        pass
-    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
+        print(traceback.print_tb(sys.exc_info()[2]))
+    return HttpResponseRedirect('/findtrip/' + date)
     
     
 def accept(request, **kwargs):
@@ -169,14 +187,14 @@ def accept(request, **kwargs):
             user_trip = UserTrip.objects.get(id=user_trip_id)
             trip = Trip.objects.get(id=user_trip.trip_id)
             actor_user_trip = UserTrip.objects.get(user_id=request.user.id, trip=trip)
-            if trip.free_places > 0 and actor_user_trip.admitted:
+            if trip.free_places > 0 and actor_user_trip.admitted and not user_trip.admited:
                 trip.free_places -= 1
                 user_trip.admitted = True
                 trip.save()
                 user_trip.save()
         return HttpResponseRedirect('/chat/' + str(trip.id))
     except Exception as e:
-        print(e)
+        print(traceback.print_tb(sys.exc_info()[2]))
         return HttpResponseRedirect(reverse('cotravelling:findtrip'))
         
 
@@ -188,32 +206,41 @@ def reject(request, **kwargs):
             trip = Trip.objects.get(id=user_trip.trip_id)
             actor_user_trip = UserTrip.objects.get(user_id=request.user.id, trip=trip)
             if actor_user_trip.admitted:
-                trip.free_places += 1
-                trip.save()
+                if user_trip.admitted:
+                    trip.free_places += 1
+                    trip.save()
                 user_trip.delete()
         return HttpResponseRedirect('/chat/' + str(trip.id))
     except Exception as e:
-        print(e)
+        print(traceback.print_tb(sys.exc_info()[2]))
         return HttpResponseRedirect(reverse('cotravelling:findtrip'))
 
 
 def leave_trip(request):
+    date = ''
     try:
-        trip_id = [int(s.replace("leave", "")) for s in request.POST if s.startswith("leave")][0]
+        query = parse_request(request)
+        trip_id = query["trip_id"]
+        date = query["date_from"]
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
             user_trip = UserTrip.objects.get(user=request.user, trip=trip)
-            trip.free_places += 1
-            trip.save()
+            if user_trip.admitted:
+                trip.free_places += 1
+                trip.save()
             user_trip.delete()
+            
     except Exception as e:
-        pass
-    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
+        print(traceback.print_tb(sys.exc_info()[2]))
+    return HttpResponseRedirect('/findtrip/' + date)
 
 
 def ask_trip(request):
+    date = ''
     try:
-        trip_id = [int(s.replace("ask", "")) for s in request.POST if s.startswith("ask")][0]
+        query = parse_request(request)
+        trip_id = query["trip_id"]
+        date = query["date_from"]
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
             if trip.free_places > 0:
@@ -222,8 +249,8 @@ def ask_trip(request):
                 user_trip.save()
             
     except Exception as e:
-        pass
-    return HttpResponseRedirect(reverse('cotravelling:findtrip'))
+        print(traceback.print_tb(sys.exc_info()[2]))
+    return HttpResponseRedirect('/findtrip/' + date)
 
 
 def load_messages(request, **kwargs):
@@ -278,6 +305,6 @@ def add_message(request, **kwargs):
             message.save()
             
     except Exception as e:
-        print(e)
+        print(traceback.print_tb(sys.exc_info()[2]))
     return JsonResponse({})
 

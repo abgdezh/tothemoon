@@ -43,7 +43,7 @@
                         <option>Окей</option>
                         <option>Рио</option>
                         <option>Шереметьево, терминал D</option>
-                    </select>  
+                    </select>
                 </div>  
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
@@ -128,6 +128,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" value="{{date_from}}" name="date_from" id="add_trip_form_hidden"/>
         <div class="row mt-2 justify-content-center">
             <div class="col-lg-3 col-md-6 col-sm-12 col-12 text-center">
                 <button type="submit" class="btn_action" name="add_trip" required style="padding: 10px 10px;">Добавить поездку</button>
@@ -167,6 +168,7 @@
             success: function(result) {
                 document.getElementById("trips_block").innerHTML = result["page"];
                 date_from = result["date_from"];
+                add_trip_form_hidden.value = date_from;
             },
         });
         
