@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bb2l*kj582nxwjl3cg)12(ide)slbi_(rui_=@wz_4o-ven0(k'
+with open('/home/abgde/secret_key') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -82,12 +84,15 @@ WSGI_APPLICATION = 'tothemoon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+with open('/home/abgde/database_password') as f:
+    PASSWORD = f.read().strip()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cotravelling',
         'USER': 'abgde',
-        'PASSWORD': 'Ingenium6263',
+        'PASSWORD': PASSWORD,
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -140,7 +145,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '6978072'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'zyza5rdvuXJYJZWSkJoS'
+with open('/home/abgde/vk_app_key') as f:
+    SOCIAL_AUTH_VK_OAUTH2_SECRET = f.read().strip()
 SOCIAL_AUTH_VK_APP_USER_MODE = 2
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
@@ -155,7 +161,7 @@ STATICFILES_FINDERS = [
 ]
 
 # Django Sass
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR,'static')
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
 
 #SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['state']
 #SESSION_COOKIE_SECURE=False
