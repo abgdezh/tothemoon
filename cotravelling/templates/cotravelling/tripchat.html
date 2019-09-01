@@ -27,7 +27,7 @@
         {% if requested_participants %}
         <div>
         Хотят поехать: {% for usertrip in requested_participants %}{% if forloop.counter0 != 0 %}, {% endif %}
-        {{usertrip.user.first_name}} {{usertrip.user.last_name}} (<a href="/accept/{{usertrip.id}}">принять</a> | <a href="/reject/{{usertrip.id}}">отказать</a>){% endfor %}
+         <a href="https://vk.com/{{usertrip.user.username}}">{{usertrip.user.first_name}} {{usertrip.user.last_name}}</a> (<a href="/accept/{{usertrip.id}}">принять</a> | <a href="/reject/{{usertrip.id}}">отказать</a>){% endfor %}
         </div>
         {% endif %}
         <div id="messages">
