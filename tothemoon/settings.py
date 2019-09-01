@@ -27,7 +27,7 @@ with open('/home/abgde/secret_key') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['10.55.131.233', '127.0.0.1', 'shareandsave.ru', '84.201.167.9']
+ALLOWED_HOSTS = ['10.55.131.233', '127.0.0.1', 'shareandsave.ru', 'www.shareandsave.ru', '84.201.167.9']
 
 
 
