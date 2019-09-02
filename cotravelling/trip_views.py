@@ -187,7 +187,7 @@ def accept(request, **kwargs):
             user_trip = UserTrip.objects.get(id=user_trip_id)
             trip = Trip.objects.get(id=user_trip.trip_id)
             actor_user_trip = UserTrip.objects.get(user_id=request.user.id, trip=trip)
-            if trip.free_places > 0 and actor_user_trip.admitted and not user_trip.admited:
+            if trip.free_places > 0 and actor_user_trip.admitted and not user_trip.admitted:
                 trip.free_places -= 1
                 user_trip.admitted = True
                 trip.save()
