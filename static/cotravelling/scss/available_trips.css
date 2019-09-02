@@ -154,6 +154,11 @@ form {
 .days_control span {
   cursor: pointer; }
 
+.placeholder {
+  padding: 16px 15px; }
+  .placeholder h4 {
+    margin-bottom: 0; }
+
 @media (min-width: 768px) and (max-width: 991px) {
   #from {
     border-radius: 5px 0 0 0; }

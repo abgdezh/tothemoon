@@ -56,7 +56,9 @@
         </div>
         {% empty %}
         <div class="card card_default card_empty text-center">
-            <h4>Поездок на {{trip_column_date.short_date}} не запланировано</h4>
+            <div class="placeholder">
+                <h4>Поездок на {{trip_column_date.short_date}} не запланировано</h4>
+            </div>
         </div>
         {% endfor %}
 </div>
