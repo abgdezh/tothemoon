@@ -94,7 +94,7 @@ DATABASES = {
         'USER': 'abgde',
         'PASSWORD': PASSWORD,
         'HOST': 'localhost',
-        'PORT': '5434',
+        'PORT': '',
     }
 }
 
