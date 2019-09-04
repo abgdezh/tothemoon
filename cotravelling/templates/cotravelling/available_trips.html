@@ -19,32 +19,9 @@
                 <div class="input_box" id="from">
                     <select class="selectpicker" data-live-search="true" name="source" required>
                         <option disabled selected value="">Откуда</option>
-                        <option>1 общежитие</option>
-                        <option>2 общежитие</option>
-                        <option>3 общежитие</option>
-                        <option>4 общежитие</option>
-                        <option>6 общежитие</option>
-                        <option>7 общежитие</option>
-                        <option>8 общежитие</option>
-                        <option>9 общежитие</option>
-                        <option>10 общежитие</option>
-                        <option>11 общежитие</option>
-                        <option>12 общежитие</option>
-                        <option>Площадь перед НК</option>
-                        <option>КПМ</option>
-                        <option>Выход у ГК</option>
-                        <option>Додо пицца</option>
-                        <option>Метро Ховрино</option>
-                        <option>Метро Алтуфьево</option>
-                        <option>Метро Селигерская</option>
-                        <option>Метро Тимирязевская</option>
-                        <option>IKEA</option>
-                        <option>Metro</option>
-                        <option>Окей</option>
-                        <option>Рио</option>
-                        <option>Шереметьево, терминал B</option>
-                        <option>Шереметьево, терминал D</option>
-                        <option>Внуково</option>
+                        {% for location in locations %}
+                        <option>{{location}}</option>
+                        {% endfor %}
                     </select>
                 </div>  
             </div>
@@ -52,32 +29,9 @@
                 <div class="input_box" id="to">
                     <select class="selectpicker align-self-center" data-live-search="true" name="target" required>
                         <option disabled selected value="">Куда</option>
-                        <option>1 общежитие</option>
-                        <option>2 общежитие</option>
-                        <option>3 общежитие</option>
-                        <option>4 общежитие</option>
-                        <option>6 общежитие</option>
-                        <option>7 общежитие</option>
-                        <option>8 общежитие</option>
-                        <option>9 общежитие</option>
-                        <option>10 общежитие</option>
-                        <option>11 общежитие</option>
-                        <option>12 общежитие</option>
-                        <option>Площадь перед НК</option>
-                        <option>КПМ</option>
-                        <option>Выход у ГК</option>
-                        <option>Додо пицца</option>
-                        <option>Метро Ховрино</option>
-                        <option>Метро Алтуфьево</option>
-                        <option>Метро Селигерская</option>
-                        <option>Метро Тимирязевская</option>
-                        <option>IKEA</option>
-                        <option>Metro</option>
-                        <option>Окей</option>
-                        <option>Рио</option>
-                        <option>Шереметьево, терминал B</option>
-                        <option>Шереметьево, терминал D</option>
-                        <option>Внуково</option>
+                        {% for location in locations %}
+                        <option>{{location}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>

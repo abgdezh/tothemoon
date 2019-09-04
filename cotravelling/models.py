@@ -5,15 +5,15 @@ from django.contrib.auth.models import User
 from django.utils import timezone
         
 class Trip(models.Model):
-    source = models.CharField(max_length=30, default="")
-    target = models.CharField(max_length=30, default="")
-    vehicle = models.CharField(max_length=30, default="")
+    source = models.CharField(max_length=30, default='')
+    target = models.CharField(max_length=30, default='')
+    vehicle = models.CharField(max_length=30, default='')
     datetime = models.DateTimeField(default=timezone.now)
     free_places = models.IntegerField(default=0)
     is_closed = models.BooleanField(default=False)
     
     def __str__(self):
-        return self.source + " " + self.target + " " + self.vehicle + " " + str(self.datetime) + " " + str(self.free_places) + " " + str(self.is_closed)
+        return self.source + ' ' + self.target + ' ' + self.vehicle + ' ' + str(self.datetime) + ' ' + str(self.free_places) + ' ' + str(self.is_closed)
     
     def time(self):
         return timezone.localtime(self.datetime).time()
@@ -29,10 +29,10 @@ class Message(models.Model):
     text = models.CharField(max_length=200)
     
     def __str__(self):
-        return str(self.trip) + "/" + str(self.author) + ", " + str(self.datetime) + ": " + str(self.text)
+        return str(self.trip) + '/' + str(self.author) + ', ' + str(self.datetime) + ': ' + str(self.text)
         
     def author_info(self):
-        return self.author.first_name + " " + self.author.last_name
+        return self.author.first_name + ' ' + self.author.last_name
 
 
 class UserTrip(models.Model):
@@ -45,18 +45,18 @@ class UserTrip(models.Model):
         unique_together = ('user', 'trip',)
     
     def __str__(self):
-        return str(self.user) + "/" + str(self.trip) + "/" + str(self.is_owner) + "/" + str(self.admitted)
+        return str(self.user) + '/' + str(self.trip) + '/' + str(self.is_owner) + '/' + str(self.admitted)
 
 
 class Order(models.Model):
-    source = models.CharField(max_length=30, default="")
-    target = models.CharField(max_length=30, default="")
+    source = models.CharField(max_length=30, default='')
+    target = models.CharField(max_length=30, default='')
     datetime = models.DateTimeField(default=timezone.now)
     is_closed = models.BooleanField(default=False)
     #min_cost = models.IntegerField(default=0)
     
     def __str__(self):
-        return self.source + " " + self.target + " " + self.vehicle + " " + str(self.datetime) + " " + str(self.free_places) + " " + str(self.is_closed)
+        return self.source + ' ' + self.target + ' ' + self.vehicle + ' ' + str(self.datetime) + ' ' + str(self.free_places) + ' ' + str(self.is_closed)
     
     def time(self):
         return timezone.localtime(self.datetime).time()
@@ -72,10 +72,10 @@ class OrdersMessage(models.Model):
     text = models.CharField(max_length=200)
     
     def __str__(self):
-        return str(self.order) + "/" + str(self.author) + ", " + str(self.datetime) + ": " + str(self.text)
+        return str(self.order) + '/' + str(self.author) + ', ' + str(self.datetime) + ': ' + str(self.text)
         
     def author_info(self):
-        return self.author.first_name + " " + self.author.last_name
+        return self.author.first_name + ' ' + self.author.last_name
 
 
 class UserOrder(models.Model):
@@ -89,4 +89,11 @@ class UserOrder(models.Model):
         unique_together = ('user', 'order',)
     
     def __str__(self):
-        return str(self.user) + "/" + str(self.order) + "/" + str(self.is_owner) + "/" + str(self.admitted)
+        return str(self.user) + '/' + str(self.order) + '/' + str(self.is_owner) + '/' + str(self.admitted)
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=30, default='')
+    
+    def __str__(self):
+        return self.name

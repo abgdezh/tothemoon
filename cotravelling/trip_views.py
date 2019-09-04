@@ -83,7 +83,8 @@ def build_context(date_from, days, user):
                 }
                  for i in range(days)],
                 'date_from' : datetime.strftime(date_from, "%Y-%m-%d"),
-                'auth' : type(user) is int or (user and user.is_authenticated)
+                'auth' : type(user) is int or (user and user.is_authenticated),
+                'locations' : Location.objects.all()
               }
     return context
 
