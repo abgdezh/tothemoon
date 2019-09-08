@@ -70,6 +70,7 @@ def build_trip(date, user=None):
                 trip.is_owner = user_trip.is_owner
                 trip.admitted = user_trip.admitted
         trip.users = [user_trip.user.first_name + " " + user_trip.user.last_name for user_trip in UserTrip.objects.filter(trip=trip.id, admitted=True)]
+        trip.deletable = len(UserTrip.objects.filter(trip=trip.id)) == 1 and trip.is_owner
     return trips
 
 
@@ -145,7 +146,6 @@ def add_trip(request):
             trip.is_closed = 'is_closed' in request.POST
             trip.save()
             date = request.POST['date_from']
-            print(date)
             user_trip = UserTrip(user=request.user, trip=trip, is_owner=True, admitted=True)
             user_trip.save()
     except Exception as e:
@@ -226,10 +226,16 @@ def leave_trip(request):
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
             user_trip = UserTrip.objects.get(user=request.user, trip=trip)
-            if user_trip.admitted:
+            joining_count = len(UserTrip.objects.filter(trip=trip))
+            if user_trip.admitted and not user_trip.is_owner:
                 trip.free_places += 1
                 trip.save()
-            user_trip.delete()
+                user_trip.delete()
+            elif not user_trip.admitted:
+                user_trip.delete()
+            elif user_trip.is_owner and joining_count == 1:
+                user_trip.delete()
+                trip.delete()
             
     except Exception as e:
         print(traceback.print_tb(sys.exc_info()[2]))

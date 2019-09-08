@@ -1,24 +1,22 @@
-{% if trip.is_owner %} <!-- Current user is owner of the trip -->
+{% if trip.joining and trip.admitted %} <!-- Current user has joined the trip and was admitted -->
 <div class="container">
-    <div class="row card_buttons justify-content-center card_buttons">
-        <div class="col-12 col-lg-6" style="padding-left: 0; padding-right: 8px;">
-            <form id="chat_form"action="/chat/{{trip.id}}" method="get">
-                <button type="submit" class="btn_action action_open_chat">открыть чат</button>
-            </form>
-        </div>
-    </div>
-</div>
-{% elif trip.joining and trip.admitted %} <!-- Current user has joined the trip and was admitted -->
-<div class="container">
-    <div class="row card_buttons">
+    <div class="row card_buttons justify-content-center">
         <div class="col-12 col-lg-6" style="padding-left: 0; padding-right: 8px;">
             <form id="chat_form" action="/chat/{{trip.id}}" method="get">
                 <button type="submit" class="btn_action action_open_chat">открыть чат</button>
             </form>
         </div>
+        {% if trip.deletable or not trip.is_owner %}
         <div class="col-12 col-lg-6" style="padding-right: 0; padding-left: 8px;">
-            <button type="submit" class="btn_action action_refuse" name="leave {{trip.id}} {{date_from}}" form="button_form">отказаться</button>
+            <button type="submit" class="btn_action action_refuse" name="leave {{trip.id}} {{date_from}}" form="button_form">
+            {% if trip.deletable %}
+            удалить
+            {% else %}
+            отказаться
+            {% endif %}
+            </button>
         </div>
+        {% endif %}
     </div>
 </div>
 {% elif trip.joining and not trip.admitted %} <!-- Current user has asked for admission -->
