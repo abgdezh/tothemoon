@@ -13,7 +13,10 @@ class Trip(models.Model):
     is_closed = models.BooleanField(default=False)
     
     def __str__(self):
-        return self.source + ' ' + self.target + ' ' + self.vehicle + ' ' + str(self.datetime) + ' ' + str(self.free_places) + ' ' + str(self.is_closed)
+        date = self.date()
+        time = self.time()
+        return f'Из {self.source} в {self.target}, {date}, {time}, {self.free_places} мест,' +\
+               (' с подтверждением' if self.is_closed else ' без подтверждения')
     
     def time(self):
         return timezone.localtime(self.datetime).time()
@@ -29,7 +32,7 @@ class Message(models.Model):
     text = models.CharField(max_length=200)
     
     def __str__(self):
-        return str(self.trip) + '/' + str(self.author) + ', ' + str(self.datetime) + ': ' + str(self.text)
+        return f'Поездка: [{self.trip}], создатель: {self.author.first_name} {self.author.last_name}, {self.datetime}: {self.text}'
         
     def author_info(self):
         return self.author.first_name + ' ' + self.author.last_name
@@ -45,7 +48,7 @@ class UserTrip(models.Model):
         unique_together = ('user', 'trip',)
     
     def __str__(self):
-        return str(self.user) + '/' + str(self.trip) + '/' + str(self.is_owner) + '/' + str(self.admitted)
+        return f'Поездка: [{self.trip}], пользователь: {self.user.first_name} {self.user.last_name}, владелец: {self.is_owner}, допущен: {self.admitted}'
 
 
 class Order(models.Model):
