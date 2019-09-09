@@ -211,6 +211,8 @@ form {
         margin-left: 0; }
     .mobile_content .participants_container {
       padding-top: 8px; }
+      .mobile_content .participants_container .participants span {
+        margin: 0 4px; }
     .mobile_content .card_buttons [class*='col-'] {
       padding-left: 0 !important;
       padding-right: 0 !important; }
@@ -269,13 +271,17 @@ form {
         margin-left: 0; }
     .mobile_content .participants_container {
       padding-top: 8px; }
+      .mobile_content .participants_container .participants span {
+        margin: 0 4px; }
     .mobile_content .card_buttons [class*='col-'] {
       padding-left: 0 !important;
       padding-right: 0 !important; }
   .action_refuse, .action_open_chat {
     padding: 0; }
   .day_control span {
-    font-size: 0.9rem; } }
+    font-size: 0.9rem; }
+  .notif_container {
+    text-align: right; } }
 
 @media (min-width: 992px) {
   #from {

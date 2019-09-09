@@ -4,6 +4,10 @@
 
 {% load sass_tags %}
 
+{% block js %}
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?162"></script>
+{% endblock js %}
+
 {% block css %}
 <link href="{% sass_src 'cotravelling/scss/available_trips.scss' %}" rel="stylesheet" type="text/css" />
 {% endblock css %}
@@ -78,8 +82,12 @@
                 </style>
             </div>
         </div>
-        <div class="row mt-2 text-right">
-            <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row mt-2">
+            <div class="col-lg-6 col-md-4 col-sm-5 col-8 order-2 order-sm-1">
+                <!-- VK Widget -->
+                <div id="vk_allow_messages_from_community"></div>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-7 col-12 order-1 order-sm-2 text-right">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1" name="is_closed"/>
                     <label class="custom-control-label" for="customCheck1">Хочу предварительно подтверждать участников</label>
@@ -148,6 +156,10 @@
         load("f", 1);
     };
 
+</script>
+
+<script type="text/javascript">
+    VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community", {height: 30}, 185779488);
 </script>
 
 {% endblock content %}

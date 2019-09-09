@@ -35,6 +35,9 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/i18n/defaults-ru_RU.js"></script>
 
+        {% block js %}
+        {% endblock js %}
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
@@ -48,18 +51,31 @@
             <a href="/" class="navbar-brand">ShareAndSave</a>
             <a class="nav-link d-none d-lg-block" href="/">О нас <span class="sr-only">(current)</span></a>
             <a class="nav-link d-none d-lg-block" href="/findtrip">Доступные поездки</a>
+            <a class="nav-link d-none d-lg-block" href="https://vk.com/shareandsave">Связаться с нами</a>
             <a class="nav-link d-block d-lg-none" href="/findtrip" style="padding-left: 0;">
                 <img class="img-responsive fit-image" src="../../static/cotravelling/img/search_icon.svg" alt="Доступные поездки"/>
             </a>
+            <a class="nav-link d-block d-lg-none" href="https://vk.com/shareandsave" style="padding-left:0;">
+                <img class="img-resposive fit-image" src="../../static/cotravelling/img/info_icon.svg" alt="Связаться с нами" style="width: 135%;"/> 
+            </a>
+            
             {% if not request.user.is_authenticated %}
-            <div class="navbar-right ml-auto mr-1 d-lg-block">
+            <div class="navbar-right ml-auto mr-1 d-none d-lg-block">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/login/vk-oauth2/?next=/findtrip';">войти</button>
             </div>
+            <a class="nav-right ml-auto nav-link d-block d-lg-none" href="/login/vk-oauth2/?next=/findtrip" style="padding-right: 0;">
+                <img src="../../static/cotravelling/img/profile_icon.svg" alt="Войти"/>
+            </a>
 
             {% else %}
-            <div class="navbar-right ml-auto mr-1 d-lg-block">
-                <button type="button" class="btn btn-outline-primary" onclick="location.href='/logout'">выйти</button>
+            <div class="navbar-right ml-auto mr-1">
+                <a class="nav-link text-primary d-none d-sm-inline">{{user.first_name}}</a>
+                <button type="button" class="btn btn-outline-primary d-none d-lg-inline align-self-center" onclick="location.href='/logout'">выйти</button>
+                
             </div>
+            <a class="nav-right nav-link d-inline d-lg-none" style="padding: 0;">
+                <img class="img-responsive fit-image" src="../../static/cotravelling/img/log_out_icon.svg" alt="Выйти" onclick="location.href='/logout'"/>
+            </a>
 
             {% endif %}
         </nav>
