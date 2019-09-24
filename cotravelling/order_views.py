@@ -114,7 +114,7 @@ def findorder(request):
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
-    return render(request, 'cotravelling/findorder.html', context)
+    return render(request, 'cotravelling/order_page.html', context)
     
 
 def load_orders(request, **kwargs):
@@ -138,7 +138,13 @@ def add_order(request):
             order = Order()
             order.source = request.POST['source']
             order.target = request.POST['target']
-            order.datetime = timezone.make_aware(datetime.strptime(request.POST['datetime'], '%d.%m.%Y %H:%M'))
+            # order.datetime = timezone.make_aware(datetime.strptime(request.POST['datetime'], '%d.%m.%Y %H:%M'))
+            waiting = float(request.POST['date'])
+            if waiting == -1:
+                next_day = datetime.now() + timedelta(days=1)
+                order.datetime_end = datetime.combine(next_day, time.min) - timedelta(minutes=1)
+            else:
+                order.datetime_end = datetime.now() + timedelta(hours=waiting)
             order.is_closed = 'is_closed' in request.POST
             order.save()
             user_order = UserOrder(user=request.user, order=order, is_owner=True, admitted=True)

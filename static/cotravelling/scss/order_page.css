@@ -1,0 +1,234 @@
+.input_box {
+  display: flex;
+  align-items: center;
+  min-height: 70px;
+  background-color: #fafafa;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25); }
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0; }
+  .no-gutters > .col,
+  .no-gutters > [class*="col-"] {
+    padding-right: 1px;
+    padding-left: 1px; }
+
+.input-group-text, select {
+  padding: 0 0 0 16px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  color: #4F4F4F;
+  font-size: 1.2rem; }
+
+select:focus {
+  outline: none !important; }
+
+.datetimepicker-input, .datetimepicker-input:focus {
+  width: 70%;
+  padding: 0 0 0 16px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  color: #4F4F4F;
+  font-size: 1.2rem; }
+
+.btn_action, .btn_action:focus {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  color: white;
+  background-color: #71D578;
+  font-size: 1.2rem; }
+
+.card_default {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  margin-top: 16px; }
+  .card_default .order_container {
+    margin-top: 16px;
+    margin-bottom: 16px; }
+  .card_default .field_hint {
+    font-size: 0.6rem;
+    color: #BDBDBD;
+    margin-bottom: -4px;
+    display: block; }
+  .card_default .from_to_block h6 {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+    word-wrap: break-word;
+    -ms-word-wrap: break-word; }
+  .card_default span {
+    display: block; }
+  .card_default .time_interval * {
+    display: inline-block; }
+  .card_default .time_interval h6 {
+    margin-bottom: 0; }
+  .card_default .time_interval img {
+    vertical-align: middle;
+    margin-bottom: 2px; }
+  .card_default .info_block {
+    margin-left: 6px; }
+    .card_default .info_block span {
+      display: block;
+      line-height: 1.1;
+      word-wrap: break-word;
+      -ms-word-wrap: break-word; }
+  .card_default .date_block {
+    font-size: 0.9rem;
+    color: #BDBDBD;
+    margin-bottom: 4px; }
+  .card_default .participants_container {
+    padding-left: 0; }
+    .card_default .participants_container .participants {
+      font-size: 0.9rem; }
+      .card_default .participants_container .participants span {
+        display: inline;
+        word-wrap: break-word;
+        -ms-word-wrap: break-word;
+        margin: 0 4px; }
+  .card_default .btn_action {
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 16px; }
+  .card_default .card_buttons {
+    margin-top: 8px;
+    margin-bottom: 0; }
+
+.card_promo, .card_sale {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-between;
+  padding: 8px; }
+  .card_promo .crad_info, .card_sale .crad_info {
+    padding-left: 0; }
+  .card_promo .card_img, .card_sale .card_img {
+    max-width: 100%;
+    object-fit: contain; }
+  .card_promo .card_title, .card_sale .card_title {
+    line-height: 1rem;
+    margin-bottom: 0px; }
+  .card_promo .card_desc, .card_sale .card_desc {
+    font-size: 0.7rem;
+    color: #4F4F4F;
+    line-height: 0.8rem; }
+
+.card_sale {
+  text-align: left; }
+  .card_sale .card_company {
+    font-size: 0.5rem;
+    color: #BDBDBD;
+    text-align: right; }
+  .card_sale .card_desc {
+    margin-top: 4px; }
+  .card_sale .card_btn, .card_sale .card_btn:hover, .card_sale .card_btn:focus {
+    max-width: 50%;
+    float: right;
+    background-image: none;
+    background-color: transparent;
+    color: #71D578;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: 0;
+    border: 0.5px solid #71D578; }
+  .card_sale .card_btn:hover, .card_sale .card_btn:active {
+    background-color: #71D578;
+    background-image: none;
+    border-color: transparent;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    color: white; }
+
+#promokod_container {
+  display: none; }
+
+#sale_container {
+  display: none; }
+
+#from {
+  border-radius: 5px 0 0 5px; }
+
+#date {
+  border-radius: 0 5px 5px 0; }
+
+.action_join {
+  margin-top: 8px !important;
+  background-color: #71D578; }
+
+.action_open_chat {
+  margin-top: 8px !important;
+  background-color: #71D578; }
+
+.action_refuse, .action_refuse:focus {
+  margin-top: 8px !important;
+  background-color: #FF6348; }
+
+form {
+  margin: 0;
+  padding: 0; }
+
+.placeholder {
+  padding: 16px 15px; }
+  .placeholder h4 {
+    margin-bottom: 0; }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .participants_container {
+    padding-left: 16px !important;
+    padding-top: 8px; }
+    .participants_container .participants span {
+      margin: 0 4px; }
+  .flight-types {
+    margin-top: 8px; }
+  .card_buttons [class*='col-'] {
+    padding-left: 0 !important;
+    padding-right: 0 !important; }
+  .action_refuse, .action_open_chat {
+    padding: 0; } }
+
+@media (max-width: 768px) {
+  .participants_container {
+    padding-left: 16px !important;
+    padding-top: 8px; }
+    .participants_container .participants span {
+      margin: 0 4px; }
+  .flight-types {
+    margin-top: 8px; }
+  #from {
+    border-radius: 5px 5px 0 0; }
+  #date {
+    border-radius: 0 0 5px 5px; }
+  .action_refuse, .action_open_chat {
+    padding: 0; } }
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .participants_container {
+    padding-left: 16px !important;
+    padding-top: 8px; }
+    .participants_container .participants span {
+      margin-left: 0px !important; }
+  .card_promo .img_container, .card_sale .img_container {
+    text-align: center; }
+    .card_promo .img_container img, .card_sale .img_container img {
+      max-width: 50%; }
+  .card_promo .card_title, .card_sale .card_title {
+    margin-top: 8px; }
+  .card_sale .card_company {
+    display: inline-block;
+    float: right; }
+  .card_default .btn_action, .card_default .btn_action:focus {
+    font-size: 0.8rem; }
+  .card_buttons button {
+    padding-left: 20px;
+    padding-right: 20px; } }
+
+/*# sourceMappingURL=order_page.css.map */

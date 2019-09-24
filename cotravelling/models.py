@@ -55,6 +55,7 @@ class Order(models.Model):
     source = models.CharField(max_length=30, default='')
     target = models.CharField(max_length=30, default='')
     datetime = models.DateTimeField(default=timezone.now)
+    datetime_end = models.DateTimeField(default=timezone.now)
     is_closed = models.BooleanField(default=False)
     #min_cost = models.IntegerField(default=0)
     

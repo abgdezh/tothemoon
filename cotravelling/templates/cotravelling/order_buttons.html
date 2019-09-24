@@ -1,0 +1,53 @@
+{% if order.is_owner%}
+<div class="container">
+    <div class="row card_buttons justify-content-center">
+        <div class="col-12 col-lg-6">
+            <button type="submit" class="btn_action action_refuse" name="delete{{order.id}}" form="button_form">Удалить заказ</button>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form action="/orders_chat/{{order.id}}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn_action action_open_chat">Открыть чат</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% elif order.joining and order.admitted%}
+<div class="container">
+    <div class="row card_buttons justify-content-center">
+        <div class="col-12 col-lg-6">
+            <button type="submit" class="btn_action action_refuse" name="leave{{order.id}}" form="button_form">Отказаться</button>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form action="/orders_chat/{{order.id}}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn_action action_open_chat">Открыть чат</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% elif order.joining and not order.admitted%}
+<div class="container">
+    <div class="row card_buttons justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn btn-warning" name="leave{{order.id}}" form="button_form">Не запрашивать участие</button>
+        </div>
+    </div>
+</div>
+{% elif order.is_closed %}
+<div class="container">
+    <div class="row card_buttons justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn_action action_open_chat" name="ask{{order.id}}" form="button_form">Запросить участие</button>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="row card_buttons justify-content-center">
+        <div class="col-12 col-lg-8">
+            <button type="submit" class="btn_action action_open_chat" name="join{{order.id}}" form="button_form">Присоединиться</button>
+        </div>
+    </div>
+</div>
+{% endif %}
