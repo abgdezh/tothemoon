@@ -101,3 +101,33 @@ class Location(models.Model):
     
     def __str__(self):
         return self.name
+
+class OrderCompanies(models.Model):
+    name = models.CharField(max_length=50, default='')
+    website = models.TextField(default='')
+    logo_img = models.FileField(default='')
+
+    def __str__(self):
+        return self.name
+
+class Promocode(models.Model):
+    name = models.CharField(max_length=200, default='Промокод')
+    code = models.CharField(max_length=10, default='')
+    desc = models.TextField(default='')
+    expiration_date = models.DateTimeField(blank=True, null=True)
+    company = models.ForeignKey(OrderCompanies, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class Sale(models.Model):
+    name = models.CharField(max_length=200, default='Акция')
+    desc = models.TextField(default='')
+    price = models.CharField(max_length=30, default='')
+    link = models.TextField(default='')
+    expiration_date = models.DateTimeField(blank=True, null=True)
+    company = models.ForeignKey(OrderCompanies, on_delete=models.CASCADE)
+    sale_image = models.FileField(default='')
+
+    def __str__(self):
+        return self.name

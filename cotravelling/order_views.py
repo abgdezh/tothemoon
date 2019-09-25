@@ -72,14 +72,25 @@ def build_order(date, user=None):
         order.users = [user_order.user.first_name + " " + user_order.user.last_name for user_order in UserOrder.objects.filter(order=order.id, admitted=True)]
     return orders
 
+def build_promocodes(date, user=None):
+    promocodes = Promocode.objects.filter(expiration_date__gte=date).order_by('-expiration_date') | Promocode.objects.filter(expiration_date__isnull=True)
+    return promocodes
+
+def build_sales(date, user=None):
+    sales = Sale.objects.filter(expiration_date__gte=date).order_by('-expiration_date') | Sale.objects.filter(expiration_date__isnull=True)
+    return sales
 
 def build_context(date_from, days, user):
     orders = [build_order(date_from + timedelta(i), user) for i in range(days)]
+    promocodes = build_promocodes(datetime.now())
+    sales = build_sales(datetime.now())
     context = {'orders': 
                [{'orders' : orders[i], 
                  'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
                 }
                  for i in range(days)],
+                'promocodes' : promocodes,
+                'sales' : sales,
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
                 'auth' : type(user) is int or (user and user.is_authenticated)
               }
