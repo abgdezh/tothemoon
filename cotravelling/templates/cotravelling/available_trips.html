@@ -127,7 +127,54 @@
     </div>
 </div>
 
+{% if period %}
+    <div id="popup-schedule_trip" class="popup">
+        <div class="popup-content">
+            <h5 class="popup-title">Уведомления о новых поездках</h5>
+            <h6 class="popup-message">
+                Как только появится поездка в гипермаркет в течение
+                {% if period == 'week' %}
+                недели,
+                {% else %}
+                выходных,
+                {% endif %}
+                мы пришлем уведомление вконтакте!
+                {% if not is_notify_allowed %}
+                Нажмите кнопку "Получать уведомления", чтобы не пропустить новую поездку.
+                {% endif %}
+            </h6>
+            <div style="display: flex;">
+                {% if not is_notify_allowed %}
+                    <!-- VK Widget -->
+                    <div id="vk_allow_messages_from_community_popup" style="align-self: center;"></div>
+                {% endif %}
+                <button id="popup_deny_btn" class="btn_boderless_action btn_small btn_popup" onclick="deny_schedule_trip('{{ period }}');" style="margin-left: auto;">Отменить</button>
+                <button id="popup_ok_btn" class="btn_boderless_action btn_small btn_popup" onclick="hide_popup();">ОК</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 <script>
+    function deny_schedule_trip(period) {
+        $.ajax({
+            url: "/findtrip/?schedule_trip=" + period + "&status=cancel"
+        });
+        
+        document.getElementsByClassName("popup-message")[0].innerHTML = "Подписка на уведомления отменена."
+        vk_btn = document.getElementById("vk_allow_messages_from_community_popup");
+        if (vk_btn != null) {
+            vk_btn.style.display = "none";
+        }
+        recreate_btn = document.getElementById("popup_deny_btn");
+        recreate_btn.innerHTML = "Восстановить";
+        recreate_btn.onclick = function() { window.location.reload(); };
+    }
+
+    function hide_popup() {
+        document.getElementById("popup-schedule_trip").style.display = 'none';
+    }
+
     function load(direction, diff) {
         $.ajax({
             url: "/load_trips/" + date_from + "/" + user + "/" + direction + "/" + diff,
@@ -160,6 +207,7 @@
 
 <script type="text/javascript">
     VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community", {height: 30}, 185779488);
+    VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community_popup", {height: 30}, 185779488);
 </script>
 
 {% endblock content %}

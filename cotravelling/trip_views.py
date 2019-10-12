@@ -20,7 +20,13 @@ import traceback
 import locale
 import sys
 
+from cotravelling.utils import user_id_to_vk_id
+from cotravelling.vk import allowed
+from cotravelling.tasks import send_trip_notifications
+
 locale.setlocale(locale.LC_TIME, locale.getlocale())
+
+SUPERMARKETS = ['IKEA', 'Metro', 'Рио', 'Ашан Алтуфьево', 'Лента']
 
 def format_timedelta(td):
   items = []
@@ -105,6 +111,15 @@ def handle_post_request(request):
 
 
 def findtrip(request, **kwargs):
+    period = request.GET.get('schedule_trip', None)
+    status = request.GET.get('status', 'in_process')
+
+    if status == 'accept':
+        add_scheduled_user(period, request.user)
+    elif status == 'cancel':
+        remove_scheduled_user(request.user)
+        period = None
+
     if request.POST:
         return handle_post_request(request)
     if 'date_from' in kwargs:
@@ -115,10 +130,46 @@ def findtrip(request, **kwargs):
     
     days = 3
 
+    vk_id = user_id_to_vk_id(request.user)
+    is_notify_allowed = False
+    if vk_id:
+        is_notify_allowed = allowed(vk_id)
+    else:
+        print("Could not find vk_id for user {}".format(request.user))
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
+    context["period"] = period
+    context["is_notify_allowed"] = is_notify_allowed
     return render(request, 'cotravelling/available_trips.html', context)
     
+def add_scheduled_user(period, user_auth):
+    start_date, end_date = get_schedule_period(period)
+    print("User will get notifications from {} to {}".format(start_date, end_date))
+    
+    user_plan = UserPlan(user=user_auth, date_start=timezone.make_aware(start_date), date_end=timezone.make_aware(end_date))
+    user_plan.save()
+    
+def get_schedule_period(period):
+    if period == 'week':
+        start_date = datetime.now()
+        end_date = start_date + timedelta(days=7)
+    elif period == "weekend":
+        current_dt = datetime.now()
+        if current_dt.weekday() == 5 or current_dt.weekday() == 6:
+            start_date = current_dt
+            if current_dt.weekday() == 5:
+                end_date = datetime.combine((start_date + timedelta(days=1)), time.max)
+            else:
+                end_date = datetime.combine(start_date, time.max)
+        else:
+            delta_sat = timedelta(days=(12 - current_dt.weekday()) % 7)
+            start_date = datetime.combine((current_dt + delta_sat), time.min)
+            end_date = datetime.combine((start_date + timedelta(days=1)), time.max)
+    
+    return start_date, end_date
+
+def remove_scheduled_user(user):
+    UserPlan.objects.filter(user=user).delete()
 
 def load_trips(request, **kwargs):
     if request.POST:
@@ -148,9 +199,27 @@ def add_trip(request):
             date = request.POST['date_from']
             user_trip = UserTrip(user=request.user, trip=trip, is_owner=True, admitted=True)
             user_trip.save()
+        
+        users = find_schedule_users(request.POST['target'], trip.datetime)
+        users = [user['user'] for user in users]
+        print(trip)
+        trip_data = {
+            'source': trip.source,
+            'target': trip.target,
+            'datetime': trip.datetime
+        }
+        if users:
+            send_trip_notifications.delay(users, trip_data)
     except Exception as e:
         print(traceback.print_tb(sys.exc_info()[2]))
     return HttpResponseRedirect('/findtrip/' + date)
+
+def find_schedule_users(target, trip_date):
+    if target not in SUPERMARKETS:
+        return []
+    
+    user_ids = UserPlan.objects.values('user').filter(date_start__lte=trip_date, date_end__gte=trip_date).distinct()
+    return user_ids
     
     
 def parse_request(request):
@@ -314,4 +383,3 @@ def add_message(request, **kwargs):
     except Exception as e:
         print(traceback.print_tb(sys.exc_info()[2]))
     return JsonResponse({})
-

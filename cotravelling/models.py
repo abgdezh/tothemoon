@@ -131,3 +131,11 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.name
+    
+class UserPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_start = models.DateTimeField(default=timezone.now)
+    date_end = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.user) + str(self.date_start) + str(self.date_end)

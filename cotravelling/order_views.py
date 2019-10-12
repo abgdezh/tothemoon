@@ -294,4 +294,3 @@ def add_orders_message(request, **kwargs):
     except Exception as e:
         print(e)
     return JsonResponse({})
-
