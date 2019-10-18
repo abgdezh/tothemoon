@@ -128,7 +128,7 @@
 </div>
 
 {% if period %}
-    <div id="popup-schedule_trip" class="popup">
+    <div id="popup-window" class="popup">
         <div class="popup-content">
             <h5 class="popup-title">Уведомления о новых поездках</h5>
             <h6 class="popup-message">
@@ -155,6 +155,21 @@
     </div>
 {% endif %}
 
+<script id="popup-template" type="text/template">
+    <div id="popup-window" class="popup">
+        <div class="popup-content">
+            <h5 class="popup-title">[[ popup_title ]]</h5>
+            <h6 class="popup-message">[[ popup_message ]]</h6>
+            <div id="popup-control-buttons" style="display: flex;">
+                {% if not is_notify_allowed %}
+                <!-- VK Widget -->
+                <div id="vk_allow_messages_from_community_popup" style="align-self: center;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</script>
+
 <script>
     function deny_schedule_trip(period) {
         $.ajax({
@@ -169,10 +184,6 @@
         recreate_btn = document.getElementById("popup_deny_btn");
         recreate_btn.innerHTML = "Восстановить";
         recreate_btn.onclick = function() { window.location.reload(); };
-    }
-
-    function hide_popup() {
-        document.getElementById("popup-schedule_trip").style.display = 'none';
     }
 
     function load(direction, diff) {
@@ -203,11 +214,15 @@
         load("f", 1);
     };
 
+    Mustache.tags = ['[[', ']]'];
 </script>
 
 <script type="text/javascript">
     VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community", {height: 30}, 185779488);
     VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community_popup", {height: 30}, 185779488);
 </script>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'cotravelling/js/popup_messages.js' %}"></script>
 
 {% endblock content %}

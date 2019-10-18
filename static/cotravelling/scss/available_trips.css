@@ -179,12 +179,11 @@ form {
   transform: translateX(-50%); }
   .popup .popup-content .popup-title {
     color: black;
-    float: left;
     display: block;
     margin-top: 15px; }
   .popup .popup-content .popup-message {
     color: #828282;
-    display: inline-block;
+    display: block;
     margin-top: 16px;
     padding-bottom: 32px;
     letter-spacing: 0.2px;
