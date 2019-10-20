@@ -1,0 +1,168 @@
+{% extends 'cotravelling/base_navbar.html' %}
+
+{% block title %}Доступные заказы{% endblock title %}
+
+{% load sass_tags %}
+
+{% block js %}
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?162"></script>
+{% endblock js %}
+
+{% block css %}
+<link href="../../static/cotravelling/css/segmented_control.css" rel="stylesheet" type="text/css" />
+<link href="{% sass_src 'cotravelling/scss/order_page.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+
+{% block content %}
+{% if auth %}
+<form action="{{ request.get_full_path }}" method="post">
+    {% csrf_token %}
+    <div class="container add_trip_box mt-2">
+        <div class="row no-gutters justify-content-center">
+            <div class="col-lg-3 col-md-3 col-sm-12 mb-1">
+                <div class="input_box" id="from">
+                    <select class="selectpicker" data-live-search="true" name="source" required>
+                        <option disabled selected value="">Откуда?</option>
+                        <option>Додо пицца</option>
+                        <option>Бизон пицца</option>
+                        <option>Пицца суши вок</option>
+                        <option>IKEA</option>
+                        <option>Окей</option>
+                      </select>
+                </div>  
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 mb-1">
+                <div class="input_box" id="to">
+                    <select class="selectpicker" data-live-search="true" name="target" required>
+                        <option disabled selected value="">Куда?</option>
+                        <option>1 общежитие</option>
+                        <option>2 общежитие</option>
+                        <option>3 общежитие</option>
+                        <option>4 общежитие</option>
+                        <option>6 общежитие</option>
+                        <option>7 общежитие</option>
+                        <option>8 общежитие</option>
+                        <option>9 общежитие, любой подъезд</option>
+                        <option>9 общежитие, 1 подъезд</option>
+                        <option>9 общежитие, 2 подъезд</option>
+                        <option>9 общежитие, 3 подъезд</option>
+                        <option>9 общежитие, 4 подъезд</option>
+                        <option>10 общежитие</option>
+                        <option>11 общежитие</option>
+                        <option>12 общежитие</option>
+                        <option>Площадь перед НК</option>
+                        <option>КПМ</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-1">
+                <!-- <div class="input-group date" id="datetimepicker" data-target-input="nearest"> -->
+                <div class="input_box" id="date">
+                    <select class="selectpicker" data-live-search="true" name="date" required>
+                        <option disabled selected value="">Когда?</option>
+                        <option value="0.5">В ближайшие 30 минут</option>
+                        <option value="1">В ближайший час</option>
+                        <option value="2">В ближайшие 2 часа</option>
+                        <option value="3">В ближайшие 3 часа</option>
+                        <option value="5">В ближайшие 5 часов</option>
+                        <option value="-1">До конца дня</option>
+                    </select>
+                    <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" name="datetime" autocomplete="off" required maxlength=16/>
+                    <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div> -->
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker').datetimepicker({
+                            locale: 'ru'
+                        });
+                    });
+                </script>
+                <style>
+                    .bootstrap-datetimepicker-widget.dropdown-menu { width: auto !important; }
+                    .bootstrap-datetimepicker-widget table td.cw {
+                        font-size: .25em;
+                        height: 40px;
+                        line-height: 40px;
+                        color: #6c757d; }
+                </style>
+            </div>
+            <div class="col-lg-9 col-md-10 col-sm-12 col-12 mt-2">
+                <!-- VK Widget -->
+                <div id="vk_allow_messages_from_community"></div>
+            </div>
+        </div>
+        <input type="hidden" value="{{date_from}}" name="date_from" id="add_trip_form_hidden"/>
+        <div class="row mt-2 justify-content-center">
+            <div class="col-lg-3 col-md-6 col-sm-12 col-12 text-center">
+                <button type="submit" class="btn_action" name="add_order" required style="padding: 10px 10px;">Добавить заказ</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}
+
+<div class="container-fluid order_lists_container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-12 text-center align-self-center">
+            <h2 class="d-inline">Доступные заказы</h2>
+        </div>
+        <div class="col-lg-4 col-12 d-inline-block d-lg-none align-self-center text-center">
+            <div class="flight-types">
+                <input type="radio" name="flight-type" value="coach" id="coach" onclick="changeList(0)" />
+                <label for="coach">Промокоды</label>
+                <input type="radio" name="flight-type" value="business" id="business" onclick="changeList(1)" checked />
+                <label for="business">Заказы</label>
+                <input type="radio" name="flight-type" value="first" id="first" onclick="changeList(2)" />
+                <label for="first">Акции</label>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center" id="orders_block"> 
+    {% include 'cotravelling/orders_block.html' %}
+    </div>
+</div>
+
+<script>
+    function load() {
+        console.log("load");
+        $.ajax({
+            url: "/load_orders/" + until_date + "/" + user,
+            success: function(result) {
+                if (result["date"] == undefined) {
+                    console.log(result);
+                }
+                console.log(result["date"] + " " + until_date);
+                if (result["date"] == window.until_date) {
+                    $("#days_list").append(result["page"]);
+                    window.until_date = result["new_date"];
+                }
+            },
+        });
+        
+    }
+</script>
+
+<script type="text/javascript">
+    VK.Widgets.AllowMessagesFromCommunity("vk_allow_messages_from_community", {height: 30}, 185779488);
+
+    function changeList(type_list) {
+        if (type_list == 0) {
+            document.getElementById("promokod_container").style.display = "block";
+            document.getElementById("order_container").style.display = "none";
+            document.getElementById("sale_container").style.display = "none";
+        } else if (type_list == 1) {
+            document.getElementById("promokod_container").style.display = "none";
+            document.getElementById("order_container").style.display = "block";
+            document.getElementById("sale_container").style.display = "none";
+        } else if (type_list == 2) {
+            document.getElementById("promokod_container").style.display = "none";
+            document.getElementById("order_container").style.display = "none";
+            document.getElementById("sale_container").style.display = "block";
+        }
+    }
+</script>
+
+{% endblock content %}

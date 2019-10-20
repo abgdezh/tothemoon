@@ -72,14 +72,25 @@ def build_order(date, user=None):
         order.users = [user_order.user.first_name + " " + user_order.user.last_name for user_order in UserOrder.objects.filter(order=order.id, admitted=True)]
     return orders
 
+def build_promocodes(date, user=None):
+    promocodes = Promocode.objects.filter(expiration_date__gte=date).order_by('-expiration_date') | Promocode.objects.filter(expiration_date__isnull=True)
+    return promocodes
+
+def build_sales(date, user=None):
+    sales = Sale.objects.filter(expiration_date__gte=date).order_by('-expiration_date') | Sale.objects.filter(expiration_date__isnull=True)
+    return sales
 
 def build_context(date_from, days, user):
     orders = [build_order(date_from + timedelta(i), user) for i in range(days)]
+    promocodes = build_promocodes(datetime.now())
+    sales = build_sales(datetime.now())
     context = {'orders': 
                [{'orders' : orders[i], 
                  'date' : datetime.strftime(date_from + timedelta(i), "%A, %-d %B"),
                 }
                  for i in range(days)],
+                'promocodes' : promocodes,
+                'sales' : sales,
                 'until_date' : datetime.strftime(date_from + timedelta(days), "%Y-%m-%d"),
                 'auth' : type(user) is int or (user and user.is_authenticated)
               }
@@ -114,7 +125,7 @@ def findorder(request):
 
     context = build_context(date_from, days, request.user)
     context["user"] = request.user
-    return render(request, 'cotravelling/findorder.html', context)
+    return render(request, 'cotravelling/order_page.html', context)
     
 
 def load_orders(request, **kwargs):
@@ -138,7 +149,13 @@ def add_order(request):
             order = Order()
             order.source = request.POST['source']
             order.target = request.POST['target']
-            order.datetime = timezone.make_aware(datetime.strptime(request.POST['datetime'], '%d.%m.%Y %H:%M'))
+            # order.datetime = timezone.make_aware(datetime.strptime(request.POST['datetime'], '%d.%m.%Y %H:%M'))
+            waiting = float(request.POST['date'])
+            if waiting == -1:
+                next_day = datetime.now() + timedelta(days=1)
+                order.datetime_end = datetime.combine(next_day, time.min) - timedelta(minutes=1)
+            else:
+                order.datetime_end = datetime.now() + timedelta(hours=waiting)
             order.is_closed = 'is_closed' in request.POST
             order.save()
             user_order = UserOrder(user=request.user, order=order, is_owner=True, admitted=True)
@@ -277,4 +294,3 @@ def add_orders_message(request, **kwargs):
     except Exception as e:
         print(e)
     return JsonResponse({})
-

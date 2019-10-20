@@ -1,0 +1,121 @@
+<div class="col-12 col-sm-8 col-md-8 col-lg-3 d-lg-block" style="max-width: 400px;" id="promokod_container">
+    {% if promocodes %}
+        {% for promocode in promocodes %}
+        <div class="card card_default card_promo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-5 col-lg-12 col-xl-5 align-self-center img_container"> 
+                        <img class="card_img" src="{{ promocode.company.logo_img }}"/>
+                    </div>
+                    <div class="col-7 col-lg-12 col-xl-7 crad_info align-self-center">
+                        <h6 class="card_title">{{ promocode.name }}</h6>
+                        <span class="card_promokode">{{ promocode.code }}</span>
+                        <span class="card_desc">{{ promocode.desc }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="card card_default card_empty text-center">
+        <div class="placeholder">
+            <h2>На сегодня промокодов нет :(</h2>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<div class="col-12 сol-sm-8 col-md-8 col-lg-5 d-lg-block" id="order_container">
+    {% if orders|length > 0 %}
+    {% for order_column in orders %}
+    {% if order_column %}
+        {% for order in order_column.orders %}
+        <div class="card card_default"> <!-- One crad for one trip -->
+            <div class="container order_container">
+                <div class="row">
+                    <div class="from_to_block col-xl-4 col-lg-6 col-6 d-flex flex-column align-items-start" style="padding-right: 0;"> <!-- From, to, when, vehicle -->
+                        <div>
+                            <span class="field_hint">Откуда</span>
+                            <h6>{{ order.source }}</h6>
+                        </div>
+                        <div class="to_block mt-auto">
+                            <span class="field_hint">Куда</span>
+                            <h6>{{ order.target }}</h6>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-6 d-flex flex-column align-items-start info_container" style="padding-left: 0; padding-right: 0;">
+                        <div class="info_block">
+                            <span class="field_hint">Время заказа</span>
+                            <div class="time_interval">
+                                <h6>{{ order.time }}</h6>
+                                <img src="../../static/cotravelling/img/time_path.svg"/>
+                                <h6>{{ order.datetime_end | time:"H:i" }}</h6>
+                            </div>
+                        </div>
+                        <div class="info_block date_block mt-auto">
+                            <span>{{ order_column.date }}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-12 participants_container"> <!-- Participants -->
+                        <span class="field_hint">Участники</span>
+                        <div class="participants d-flex flex-wrap justify-content-between">
+                            {% for user in order.users %}
+                                <span>{{ user }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-center">
+                    <div class="col-xl-12 col-lg-12 col-12 d-block">
+                            {% if auth %}    
+                            <form id="button_form" action="{{ request.get_full_path }}" method="post">
+                                {% csrf_token %}
+                            </form>
+                            {% include "cotravelling/order_buttons.html" %}
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endfor %}
+    {% else %}
+        <div class="card card_default card_empty text-center">
+            <div class="placeholder">
+                <h2>Будь первым, кто закажет сегодня!</h2>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<div class="col-12 col-sm-8 col-md-8 col-lg-3 d-lg-block text-right" style="max-width: 400px;" id="sale_container">
+    {% if sales %}
+    {% for sale in sales %}
+    <div class="card card_default card_sale">
+        <div class="container">
+            <div class="row"> <!-- One row for one card -->
+                <div class="col-5 col-lg-12 col-xl-5 align-self-center img_container"> 
+                    <img class="card_img" src="{{ sale.sale_image }}"/>
+                </div>
+                <div class="col-7 col-lg-12 col-xl-7 crad_info align-self-center">
+                    <div class="crad_info">
+                        <span class="card_company">{{ sale.company.name }}</span>
+                        <h6 class="card_title">{{ sale.name }}</h6>
+                        <span class="card_desc">{{ sale.desc }}</span>
+                        <div class="d-block" style="margin-top: 8px;">
+                            <span class="card_price d-inline">{{ sale.price }} ₽</span>
+                            <!-- <button class="card_btn d-inline">в заявку</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="card card_default card_empty text-center">
+        <div class="placeholder">
+            <h2>На сегодня акций нет :(</h2>
+        </div>
+    </div>
+    {% endif %}
+</div>
