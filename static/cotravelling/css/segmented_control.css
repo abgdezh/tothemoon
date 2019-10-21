@@ -1,0 +1,73 @@
+.flight-types {
+	display: flex;
+	max-width: 336px;
+	width: 100%;
+	position: relative;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	position: relative;
+	z-index: 1;
+	margin: 0 auto;
+	font-size: 12px;
+	border: 1px solid #71D578;
+	border-radius: 4px;
+	color: #71D578;
+}
+
+.flight-types > input {
+	display: none;
+}
+
+.flight-types > input:checked + label {
+	color: #fff;
+}
+
+.flight-types > input:nth-of-type(1):checked ~ label:last-of-type:before {
+	transform: translateX(calc(0% + 0px));
+}
+
+.flight-types > input:nth-of-type(2):checked ~ label:last-of-type:before {
+	transform: translateX(calc(100% + 0px));
+}
+
+.flight-types > input:nth-of-type(3):checked ~ label:last-of-type:before {
+	transform: translateX(calc(200% + 0px));
+}
+
+.flight-types label {
+	flex: 1;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.flight-types label:last-of-type:before {
+	content: "";
+	display: block;
+	max-width: calc(33.33333% - 0px);
+	margin: 0px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	transform: translateX(0);
+}
+
+.flight-types label {
+	padding: 6px 4px;
+	transition: color 250ms cubic-bezier(0, 0.95, 0.38, 0.98);
+}
+
+.flight-types label:before {
+    background: #71D578;
+	transition: all 250ms cubic-bezier(0, 0.95, 0.38, 0.98);
+}
+
+.flight-types label:not(:last-child) {
+	border-right: 1px solid #71D578;
+}
