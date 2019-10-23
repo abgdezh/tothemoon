@@ -1,5 +1,5 @@
 import vk_api
-import random 
+import random
 
 GROUP_ID = 185779488
 

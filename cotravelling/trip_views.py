@@ -205,7 +205,6 @@ def add_trip(request):
         
         users = find_schedule_users(request.POST['target'], trip.datetime)
         users = [user['user'] for user in users]
-        
         trip_data = {
             'source': trip.source,
             'target': trip.target,
@@ -256,7 +255,7 @@ def join_trip(request):
                 user_trip = UserTrip(user=request.user, trip=trip, is_owner=False, admitted=True)
                 trip.save()
                 user_trip.save()
-        
+
         trip_data = {
             'source': trip.source,
             'target': trip.target,

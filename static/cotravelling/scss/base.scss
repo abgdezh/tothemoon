@@ -25,6 +25,19 @@ body {
     cursor: pointer;
 }
 
+.btn_boderless_action, .btn_boderless_action:hover {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btn_small, btn_small:hover, btn_small:focus {
+    padding: 10px 15px 10px 15px;
+    font-size: 0.9rem;
+    transition: 0.5s;
+    outline: 0 !important;
+}
+
 footer {
     flex-shrink: 0;
     width: 100%;
@@ -32,7 +45,7 @@ footer {
     background-color: #1E90FF;
     color: white;
     position: absolute;
-    bottom: -220px;
+    bottom: -100px;
 }
 
 @media (min-width: 576px) and (max-width: 991px) {
