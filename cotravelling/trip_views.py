@@ -205,7 +205,7 @@ def add_trip(request):
         
         users = find_schedule_users(request.POST['target'], trip.datetime)
         users = [user['user'] for user in users]
-        print(trip)
+        
         trip_data = {
             'source': trip.source,
             'target': trip.target,
@@ -248,6 +248,7 @@ def join_trip(request):
         date = query["date_from"]
         trip_participants_id = UserTrip.objects.values('user_id').filter(id=trip_id)
         user_ids = [part_id['user_id'] for part_id in trip_participants_id]
+        print("Users id which will received the notification: {}".format(user_ids))
         with transaction.atomic():
             trip = Trip.objects.get(id=trip_id)
             if trip.free_places > 0 and not trip.is_closed:
@@ -256,7 +257,6 @@ def join_trip(request):
                 trip.save()
                 user_trip.save()
         
-        print(user_ids)
         trip_data = {
             'source': trip.source,
             'target': trip.target,
