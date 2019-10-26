@@ -3,7 +3,7 @@ import random
 
 GROUP_ID = 185779488
 
-with open('/home/abgde/vk_bot_key') as f:
+with open('/local/abgde/vk_bot_key') as f:
     VK_BOT_TOKEN = f.read().strip()
     vk = vk_api.VkApi(token=VK_BOT_TOKEN)
     api = vk.get_api()
