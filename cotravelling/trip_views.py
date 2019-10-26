@@ -13,6 +13,7 @@ from django.db import transaction
 from datetime import datetime, timedelta, date, time
 
 from django.utils import timezone
+from django.utils import encoding
 
 from django_user_agents.utils import get_user_agent
 
@@ -114,6 +115,10 @@ def findtrip(request, **kwargs):
     period = request.GET.get('schedule_trip', None)
     status = request.GET.get('status', 'in_process')
     added_trip = request.GET.get('added_trip', False)
+
+    # проверка если пользователь хочет подписаться на уведомления, но он не авторизован
+    if period and status != 'in_process' and not request.user.is_authenticated:
+        return HttpResponseRedirect('/findtrip/?need_auth=true&redirect_url=\"' + '/findtrip/?schedule_trip=' + period +'%26status=' + status + '\"' )
 
     if status == 'accept':
         add_scheduled_user(period, request.user)
@@ -246,7 +251,7 @@ def join_trip(request):
         query = parse_request(request)
         trip_id = query["trip_id"]
         date = query["date_from"]
-        trip_participants_id = UserTrip.objects.values('user_id').filter(id=trip_id)
+        trip_participants_id = UserTrip.objects.values('user_id').filter(user_id=trip_id)
         user_ids = [part_id['user_id'] for part_id in trip_participants_id]
         print("Users id which will received the notification: {}".format(user_ids))
         with transaction.atomic():

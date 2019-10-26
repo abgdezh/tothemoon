@@ -161,7 +161,7 @@
             <h5 class="popup-title">[[ popup_title ]]</h5>
             <h6 class="popup-message">[[ popup_message ]]</h6>
             <div id="popup-control-buttons" style="display: flex;">
-                {% if not is_notify_allowed %}
+                {% if not is_notify_allowed and auth %}
                 <!-- VK Widget -->
                 <div id="vk_allow_messages_from_community_popup" style="align-self: center;"></div>
                 {% endif %}
